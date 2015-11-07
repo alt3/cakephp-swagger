@@ -1,6 +1,6 @@
 # Swagger plugin for CakePHP
 
-[![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
+[![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
 Easily add [swagger-ui](https://github.com/swagger-api/swagger-ui) and
