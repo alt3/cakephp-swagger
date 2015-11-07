@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9aa9a0cb709a95b0a2cc17d15643284d",
-    "content-hash": "30861da017e01f318a9b29db3a9c6ffd",
+    "hash": "99dd2e84db9858df33ca58f8873e60ee",
+    "content-hash": "cddce3e462b1057449112c02ea9dc4e7",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -492,16 +492,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "dev-master",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "6d9559011aa01de51d976a91ba3a54ea4bd5def9"
+                "reference": "f6624cc067d7894ec32943f5b94cf282c683f7c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/6d9559011aa01de51d976a91ba3a54ea4bd5def9",
-                "reference": "6d9559011aa01de51d976a91ba3a54ea4bd5def9",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/f6624cc067d7894ec32943f5b94cf282c683f7c7",
+                "reference": "f6624cc067d7894ec32943f5b94cf282c683f7c7",
                 "shasum": ""
             },
             "require": {
@@ -548,7 +548,7 @@
                 "rest",
                 "service discovery"
             ],
-            "time": "2015-10-23 15:33:21"
+            "time": "2015-10-18 13:05:54"
         }
     ],
     "packages-dev": [
@@ -1589,9 +1589,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "zircote/swagger-php": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

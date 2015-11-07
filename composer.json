@@ -6,7 +6,7 @@
     "require": {
         "php": ">=5.4.16",
         "cakephp/cakephp": "~3.0",
-        "zircote/swagger-php": "dev-master"
+        "zircote/swagger-php": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
