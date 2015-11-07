@@ -7,7 +7,7 @@ use Cake\Core\Exception;
 use Cake\Routing\Router;
 
 /**
- * Class UiController responsible for the swagger-ui page
+ * UiController class responsible for serving the swagger-ui template page.
  *
  * @package Alt3\Swagger\Controller
  */
@@ -15,7 +15,7 @@ class UiController extends Controller
 {
 
     /**
-     * Index action
+     * Index action used for setting template variables.
      *
      * @return void
      */
