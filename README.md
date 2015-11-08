@@ -18,16 +18,37 @@ Install plugin using composer:
 composer require alt3/cakephp-swagger:dev-master
 ```
 
-To enable the plugin automatically run:
+To enable the plugin either run:
 
 ```bash
 bin/cake plugin load Alt3/Swagger --routes
 ```
 
-Or manually update your `config/bootstrap.php` file with:
+or manually add the following line to your `config/bootstrap.php` file:
 
 ```bash
 Plugin::load('Alt3/Swagger', ['routes' => true]);
+```
+
+## Configuration
+
+Override the plugin's default
+[settings](https://github.com/alt3/cakephp-swagger/blob/master/src/Controller/AppController.php#L18)
+by creating configuration file `/config/swagger.php` similar to the one below.
+
+
+```php
+<?php
+
+return [
+    'Swagger' => [
+        'include_path' => ROOT . DS . 'src',
+        'exclude_paths' => [],
+        'ui' => [
+            'page_title' => 'cakephp-swagger ',
+        ]
+    ]
+];
 ```
 
 ## Usage (@todo)
