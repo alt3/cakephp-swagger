@@ -21,6 +21,7 @@ class UiController extends AppController
      */
     public function index()
     {
+        $this->set('config', static::$config['ui']);
         $this->set('url', Router::url([
             'plugin' => 'Alt3/Swagger',
             'controller' => 'Definitions'

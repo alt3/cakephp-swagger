@@ -1,5 +1,5 @@
-<?
-    // set title
+<?php
+    $this->assign('title', $config['page_title']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,6 +48,7 @@
                 dom_id: "swagger-ui-container",
                 supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
                 onComplete: function(swaggerApi, swaggerUi){
+
                     if(typeof initOAuth == "function") {
                         initOAuth({
                             clientId: "your-client-id",
