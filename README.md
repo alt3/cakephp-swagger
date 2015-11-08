@@ -39,7 +39,6 @@ by creating configuration file `/config/swagger.php` similar to the one below.
 
 ```php
 <?php
-
 return [
     'Swagger' => [
         'include_path' => ROOT . DS . 'src',
