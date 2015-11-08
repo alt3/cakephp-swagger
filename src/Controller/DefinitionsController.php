@@ -19,6 +19,13 @@ class DefinitionsController extends AppController
         // respond with json
         header('Content-Type: application/json');
 
+        // set CORS headers
+        if (count(static::$config['cors'])) {
+            foreach (static::$config['cors'] as $header => $value) {
+                header("$header: $value");
+            }
+        }
+
         // debug mode: crawl directory in real-time
         $swagger = \Swagger\scan(static::$config['include_path'], [
             'exclude' => static::$config['exclude_paths']

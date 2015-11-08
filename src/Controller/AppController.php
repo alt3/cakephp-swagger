@@ -18,6 +18,11 @@ class AppController extends BaseController
     public static $config = [
         'include_path' => ROOT . DS . 'src',
         'exclude_paths' => [],
+        'cors' => [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'GET, POST',
+            'Access-Control-Allow-Headers' => 'X-Requested-With'
+        ],
         'ui' => [
             'page_title' => 'cakephp-swagger'
         ]

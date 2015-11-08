@@ -43,8 +43,13 @@ return [
     'Swagger' => [
         'include_path' => ROOT . DS . 'src',
         'exclude_paths' => [],
+        'cors' => [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'GET, POST',
+            'Access-Control-Allow-Headers' => 'X-Requested-With'
+        ],
         'ui' => [
-            'page_title' => 'cakephp-swagger ',
+            'page_title' => 'cakephp-swagger',
         ]
     ]
 ];
