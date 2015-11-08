@@ -17,7 +17,10 @@ class AppController extends BaseController
      */
     public static $config = [
         'include_path' => ROOT . DS . 'src',
-        'exclude_paths' => []
+        'exclude_paths' => [],
+        'ui' => [
+            'page_title' => 'cakephp-swagger'
+        ]
     ];
 
     /**
