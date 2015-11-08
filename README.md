@@ -50,7 +50,13 @@ return [
 ];
 ```
 
-## Usage (@todo)
+## Usage
 
 - http://your.api.com/alt3/swagger/ui
 - http://your.api.com/alt3/swagger/definitions
+
+## Contribute
+
+Make sure tests and
+[CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer)
+pass before submitting a PR.
