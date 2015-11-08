@@ -1,17 +1,13 @@
 <?php
 namespace Alt3\Swagger\Controller;
 
-use Cake\Controller\Controller;
+use Alt3\Swagger\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Core\Exception;
 use Swagger;
 
-class DefinitionsController extends Controller
+class DefinitionsController extends AppController
 {
-    /**
-     * @var name of the swagger file (used in production mode)
-     */
-    protected $swaggerFile = 'swagger.json';
 
     /**
      * Index action.
@@ -24,10 +20,8 @@ class DefinitionsController extends Controller
         header('Content-Type: application/json');
 
         // debug mode: crawl directory in real-time
-        $swagger = \Swagger\scan(ROOT . DS . 'src', [
-            'exclude' => [
-                '/Editor/'
-            ]
+        $swagger = \Swagger\scan(static::$config['include_path'], [
+            'exclude' => static::$config['exclude_paths']
         ]);
         echo $swagger;
         exit(0);

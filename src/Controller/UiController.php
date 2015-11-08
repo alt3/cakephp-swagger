@@ -1,7 +1,7 @@
 <?php
 namespace Alt3\Swagger\Controller;
 
-use Cake\Controller\Controller;
+use Alt3\Swagger\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Core\Exception;
 use Cake\Routing\Router;
@@ -11,7 +11,7 @@ use Cake\Routing\Router;
  *
  * @package Alt3\Swagger\Controller
  */
-class UiController extends Controller
+class UiController extends AppController
 {
 
     /**
