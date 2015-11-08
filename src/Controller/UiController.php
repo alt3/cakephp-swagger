@@ -27,7 +27,7 @@ class UiController extends AppController
         // make the first definition autoload inside the UI
         $defaultDefinition = key(static::$config['definitions']);
         if (!$defaultDefinition) {
-            throw new NotFoundException("cakephp-swagger configuration file does not contain any definitions");
+            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain any definitions");
         }
 
         $this->set('url', Router::url([

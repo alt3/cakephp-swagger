@@ -5,7 +5,6 @@ use Alt3\Swagger\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Cake\Network\Exception\NotFoundException;
 
 class DefinitionsController extends AppController
 {
@@ -23,7 +22,7 @@ class DefinitionsController extends AppController
         }
 
         if (!array_key_exists($id, static::$config['definitions'])) {
-            throw new NotFoundException("cakephp-swagger configuration file does not contain a definition for '$id'");
+            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain a definition for '$id'");
         }
 
         // load definition from cache
