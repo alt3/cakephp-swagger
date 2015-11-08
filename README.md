@@ -48,10 +48,10 @@ the following content:
 
 Definitions contain information required by:
 
- - swagger-php to know which files and folders to parse for annotations
- - this plugin to serve the resulting json for usage by the UI
+ - swagger-php so it knows which files and folders to parse for annotations
+ - this plugin so it can serve the results as json so it can be used by the UI
 
-Ccakephp-swagger supports multiple swagger definitions so define as many as
+Cakephp-swagger supports multiple definitions so define as many as
 you need.
 
 ```php
@@ -78,8 +78,8 @@ The above will:
 
 - create two definition endpoints named `api` and `editor` serving swagger json
 - make swagger-php:
-    - scan all files and folders defined inside `include` for swagger-php annotations
-    - skip all files and folders defined inside `exclude`
+    - scan all files and folders defined in `include` for swagger-php annotations
+    - skip all files and folders defined in `exclude`
 
 ### Customization
 
@@ -97,9 +97,9 @@ Use your configuration file to override any of the plugin's default
 ```
 
 The above will:
-- turn OFF caching when in debug mode
-- no longer set CORS headers for the definition responses
-- change the page title used for the UI
+- automatically turn ON caching when in production mode
+- prevent CORS headers being added to the definition responses
+- change the page title as used by the UI
 
 
 ## Usage
