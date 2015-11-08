@@ -12,53 +12,103 @@ Easily add [swagger-ui](https://github.com/swagger-api/swagger-ui) and
 
 ## Installation
 
-Install plugin using composer:
+1. Install the plugin using composer:
 
-```bash
-composer require alt3/cakephp-swagger:dev-master
-```
+    ```bash
+    composer require alt3/cakephp-swagger:dev-master
+    ```
 
-To enable the plugin either run:
+2. To enable the plugin either run:
 
-```bash
-bin/cake plugin load Alt3/Swagger --routes
-```
+    ```bash
+    bin/cake plugin load Alt3/Swagger --routes
+    ```
 
-or manually add the following line to your `config/bootstrap.php` file:
+    or manually add the following line to your `config/bootstrap.php` file:
 
-```bash
-Plugin::load('Alt3/Swagger', ['routes' => true]);
-```
+    ```bash
+    Plugin::load('Alt3/Swagger', ['routes' => true]);
+    ```
+
+3. Make sure to create configuration file `/config/swagger.php` with at least
+the following content:
+
+    ```php
+    <?php
+    return [
+        'Swagger' => [
+            'definitions' => []
+        ]
+    ];
+    ```
 
 ## Configuration
 
-Override the plugin's default
-[settings](https://github.com/alt3/cakephp-swagger/blob/master/src/Controller/AppController.php#L18)
-by creating configuration file `/config/swagger.php` similar to the one below.
+#### Definitions
 
+Definitions contain information required by:
+
+ - swagger-php to know which files and folders to parse for annotations
+ - this plugin to serve the resulting json for usage by the UI
+
+Ccakephp-swagger supports multiple swagger definitions so define as many as
+you need.
 
 ```php
-<?php
-return [
-    'Swagger' => [
-        'include_path' => ROOT . DS . 'src',
-        'exclude_paths' => [],
-        'cors' => [
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => 'GET, POST',
-            'Access-Control-Allow-Headers' => 'X-Requested-With'
+'Swagger' => [
+    'definitions' => [
+        'api' => [
+            'include' => ROOT . DS . 'src',
+            'exclude' => [
+                '/Editor/'
+            ]
         ],
-        'ui' => [
-            'page_title' => 'cakephp-swagger',
+        'editor' => [
+            'include' => [
+                ROOT . DS . 'src' . DS . 'Controller' . DS . 'Editor',
+                ROOT . DS . 'src' . 'Model'
+            ],
+            'exclude' => []
         ]
     ]
-];
+]
 ```
+
+The above will:
+
+- create two definition endpoints named `api` and `editor` serving swagger json
+- make swagger-php:
+    - scan all files and folders defined inside `include` for swagger-php annotations
+    - skip all files and folders defined inside `exclude`
+
+### Customization
+
+Use your configuration file to override any of the plugin's default
+[settings](https://github.com/alt3/cakephp-swagger/blob/master/src/Controller/AppController.php#L25).
+
+```php
+'Swagger' => [
+    'noCache' => Configure::read('debug'),
+    'cors_headers' => [],
+    'ui' => [
+        'page_title' => 'My Swagger Docs'
+    ]
+]
+```
+
+The above will:
+- turn OFF caching when in debug mode
+- no longer set CORS headers for the definition responses
+- change the page title used for the UI
+
 
 ## Usage
 
 - http://your.api.com/alt3/swagger/ui
-- http://your.api.com/alt3/swagger/definitions
+- http://your.api.com/alt3/swagger/definitions/<definition-endpoint>
+
+> Please note that the UI will automatically load the first definition found
+> in the configuration file.
 
 ## Contribute
 

@@ -4,6 +4,7 @@ namespace Alt3\Swagger\Controller;
 use Alt3\Swagger\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Core\Exception;
+use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 
 /**
@@ -22,9 +23,18 @@ class UiController extends AppController
     public function index()
     {
         $this->set('config', static::$config['ui']);
+
+        // make the first definition autoload inside the UI
+        $defaultDefinition = key(static::$config['definitions']);
+        if (!$defaultDefinition) {
+            throw new NotFoundException("cakephp-swagger configuration file does not contain any definitions");
+        }
+
         $this->set('url', Router::url([
             'plugin' => 'Alt3/Swagger',
-            'controller' => 'Definitions'
+            'controller' => 'Definitions',
+            'action' => 'index',
+            $defaultDefinition
         ], true));
     }
 }
