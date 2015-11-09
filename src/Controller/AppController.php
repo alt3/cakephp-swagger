@@ -24,7 +24,7 @@ class AppController extends BaseController
      */
     public static $config = [
         'noCache' => true,
-        'definitions' => [],
+        'documents' => [],
         'cors_headers' => [
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Methods' => 'GET, POST',

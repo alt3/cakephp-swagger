@@ -6,38 +6,38 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 
-class DefinitionsController extends AppController
+class DocsController extends AppController
 {
 
     /**
      * Index action.
      *
-     * @param string $id Name of definition to generate/serve
+     * @param string $id Name of swagger document to generate/serve
      * @return void
      */
     public function index($id = null)
     {
         if (!$id) {
-            throw new \InvalidArgumentException("cakephp-swagger requires a definition argument");
+            throw new \InvalidArgumentException("cakephp-swagger document requires an argument");
         }
 
-        if (!array_key_exists($id, static::$config['definitions'])) {
-            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain a definition for '$id'");
+        if (!array_key_exists($id, static::$config['documents'])) {
+            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain a document for '$id'");
         }
 
-        // load definition from cache
+        // load document from cache
         $cacheKey = $this->cachePrefix . $id;
         if (static::$config['noCache'] === false) {
             $swagger = Cache::read($cacheKey);
             if ($swagger === false) {
-                throw new \InvalidArgumentException("cakephp-swagger could not load definition from cache using key $cacheKey");
+                throw new \InvalidArgumentException("cakephp-swagger could not load document from cache using key $cacheKey");
             }
         }
 
-        // generate new definition
+        // generate new document
         if (static::$config['noCache'] === true) {
-            $swagger = \Swagger\scan(static::$config['definitions'][$id]['include'], [
-                'exclude' => static::$config['definitions'][$id]['exclude']
+            $swagger = \Swagger\scan(static::$config['documents'][$id]['include'], [
+                'exclude' => static::$config['documents'][$id]['exclude']
             ]);
             Cache::delete($cacheKey);
             Cache::write($cacheKey, $swagger);
@@ -50,7 +50,7 @@ class DefinitionsController extends AppController
             }
         }
 
-        // Serve swagger definition in memory as json
+        // Serve swagger document in memory as json
         header('Content-Type: application/json');
         echo $swagger;
         exit(0);

@@ -24,17 +24,17 @@ class UiController extends AppController
     {
         $this->set('config', static::$config['ui']);
 
-        // make the first definition autoload inside the UI
-        $defaultDefinition = key(static::$config['definitions']);
-        if (!$defaultDefinition) {
-            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain any definitions");
+        // make the first document autoload inside the UI
+        $defaultDocument = key(static::$config['documents']);
+        if (!$defaultDocument) {
+            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain any documents");
         }
 
         $this->set('url', Router::url([
             'plugin' => 'Alt3/Swagger',
-            'controller' => 'Definitions',
+            'controller' => 'Docs',
             'action' => 'index',
-            $defaultDefinition
+            $defaultDocument
         ], true));
     }
 }

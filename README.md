@@ -37,26 +37,23 @@ the following content:
     <?php
     return [
         'Swagger' => [
-            'definitions' => []
+            'documents' => []
         ]
     ];
     ```
 
 ## Configuration
 
-#### Definitions
+#### Documents
 
-Definitions contain information required by:
+Specify one or more documents in your configuration file so:
 
- - swagger-php so it knows which files and folders to parse for annotations
- - this plugin so it can serve the results as json so it can be used by the UI
-
-Cakephp-swagger supports multiple definitions so define as many as
-you need.
+ - swagger-php knows which files and folders to parse for annotations
+ - this plugin can serve the results as json (for used in the UI)
 
 ```php
 'Swagger' => [
-    'definitions' => [
+    'documents' => [
         'api' => [
             'include' => ROOT . DS . 'src',
             'exclude' => [
@@ -76,7 +73,7 @@ you need.
 
 The above will:
 
-- create two definition endpoints named `api` and `editor` serving swagger json
+- create two document endpoints named `api` and `editor` serving swagger json
 - make swagger-php:
     - scan all files and folders defined in `include` for swagger-php annotations
     - skip all files and folders defined in `exclude`
@@ -98,16 +95,16 @@ Use your configuration file to override any of the plugin's default
 
 The above will:
 - automatically turn ON caching when in production mode
-- prevent CORS headers being added to the definition responses
+- prevent CORS headers being added to the document responses
 - change the page title as used by the UI
 
 
 ## Usage
 
 - http://your.api.com/alt3/swagger/ui
-- http://your.api.com/alt3/swagger/definitions/<definition-endpoint>
+- http://your.api.com/alt3/swagger/documents/<document-endpoint>
 
-> Please note that the UI will automatically load the first definition found
+> Please note that the UI will automatically load the first document found
 > in the configuration file.
 
 ## Contribute
