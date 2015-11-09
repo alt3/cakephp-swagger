@@ -36,9 +36,14 @@ class DocsController extends AppController
 
         // generate new document
         if (static::$config['noCache'] === true) {
-            $swagger = \Swagger\scan(static::$config['documents'][$id]['include'], [
-                'exclude' => static::$config['documents'][$id]['exclude']
-            ]);
+            $swaggerOptions = null;
+            if (isset(static::$config['documents'][$id]['exclude'])) {
+                $swaggerOptions = [
+                    'exclude' => static::$config['documents'][$id]['exclude']
+                ];
+            }
+
+            $swagger = \Swagger\scan(static::$config['documents'][$id]['include'], $swaggerOptions);
             Cache::delete($cacheKey);
             Cache::write($cacheKey, $swagger);
         }
