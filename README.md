@@ -1,10 +1,13 @@
-# Swagger plugin for CakePHP
+# cakephp-swagger
 
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
-Easily add [swagger-ui](https://github.com/swagger-api/swagger-ui) and
-[swagger-php](https://github.com/zircote/swagger-php) to your CakePHP (API) application.
+Swagger plugin for properly documenting your CakePHP 3.x APIs using:
+
+- [swagger-php](https://github.com/zircote/swagger-php)
+- [swagger-ui](https://github.com/swagger-api/swagger-ui)
+
 
 ## Requirements
 
@@ -64,8 +67,7 @@ Specify one or more documents in your configuration file so:
             'include' => [
                 ROOT . DS . 'src' . DS . 'Controller' . DS . 'Editor',
                 ROOT . DS . 'src' . 'Model'
-            ],
-            'exclude' => []
+            ]
         ]
     ]
 ]
@@ -73,7 +75,10 @@ Specify one or more documents in your configuration file so:
 
 The above will:
 
-- create two document endpoints named `api` and `editor` serving swagger json
+- create two document endpoints:
+    - under url `/alt3/swagger/docs`
+    - named `api` and `editor`
+    - serving swagger json documents
 - make swagger-php:
     - scan all files and folders defined in `include` for swagger-php annotations
     - skip all files and folders defined in `exclude`
@@ -94,7 +99,7 @@ Use your configuration file to override any of the plugin's default
 ```
 
 The above will:
-- automatically turn ON caching when in production mode
+- automatically turn OFF caching when in debug mode
 - prevent CORS headers being added to the document responses
 - change the page title as used by the UI
 
@@ -102,10 +107,10 @@ The above will:
 ## Usage
 
 - http://your.api.com/alt3/swagger/ui
-- http://your.api.com/alt3/swagger/documents/<document-endpoint>
+- http://your.api.com/alt3/swagger/docs/<document-endpoint>
 
-> Please note that the UI will automatically load the first document found
-> in the configuration file.
+> Please note that the UI will automatically load the first document
+> specified in the configuration file.
 
 ## Contribute
 
