@@ -8,6 +8,7 @@ Swagger plugin for properly documenting your CakePHP 3.x APIs using:
 - [swagger-php](https://github.com/zircote/swagger-php)
 - [swagger-ui](https://github.com/swagger-api/swagger-ui)
 
+# ALPHA, DO NOT USE IN PRODUCTION
 
 ## Requirements
 
