@@ -5,8 +5,12 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4.16",
-        "cakephp/cakephp": "~3.0",
+        "cakephp/cakephp": "~3.1",
         "zircote/swagger-php": "^2.0"
+    },
+    "support": {
+        "issues": "https://github.com/alt3/cakephp-swagger/issues",
+        "source": "https://github.com/alt3/cakephp-swagger"
     },
     "autoload": {
         "psr-4": {
