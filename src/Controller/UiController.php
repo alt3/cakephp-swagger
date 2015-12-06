@@ -22,6 +22,8 @@ class UiController extends AppController
      */
     public function index()
     {
+        $this->viewBuilder()->layout(false);
+
         $this->set('config', static::$config['ui']);
 
         // make the first document autoload inside the UI
