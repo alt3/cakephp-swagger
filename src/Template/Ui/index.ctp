@@ -1,5 +1,7 @@
 <?php
-    $this->assign('title', $config['page_title']);
+
+use Cake\View\Helper\HtmlHelper;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,22 +10,36 @@
     <title>Swagger UI</title>
     <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
-    <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
-    <link href='css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
-    <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
-    <link href='css/reset.css' media='print' rel='stylesheet' type='text/css'/>
-    <link href='css/print.css' media='print' rel='stylesheet' type='text/css'/>
-    <script src='lib/jquery-1.8.0.min.js' type='text/javascript'></script>
-    <script src='lib/jquery.slideto.min.js' type='text/javascript'></script>
-    <script src='lib/jquery.wiggle.min.js' type='text/javascript'></script>
-    <script src='lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
-    <script src='lib/handlebars-2.0.0.js' type='text/javascript'></script>
-    <script src='lib/underscore-min.js' type='text/javascript'></script>
-    <script src='lib/backbone-min.js' type='text/javascript'></script>
-    <script src='swagger-ui.js' type='text/javascript'></script>
-    <script src='lib/highlight.7.3.pack.js' type='text/javascript'></script>
-    <script src='lib/marked.js' type='text/javascript'></script>
-    <script src='lib/swagger-oauth.js' type='text/javascript'></script>
+    <?php
+
+        // screen stylesheets
+        echo $this->Html->css([
+            'Alt3/Swagger.typography.css',
+            'Alt3/Swagger.reset.css',
+            'Alt3/Swagger.screen.css'
+        ], ['media' => 'screen', 'once' => false, 'fullBase' => true]);
+
+        // print stylesheet
+        echo $this->Html->css([
+            'Alt3/Swagger.reset.css',
+            'Alt3/Swagger.print.css',
+        ], ['media' => 'print', 'once' => false, 'fullBase' => true]);
+
+        echo $this->Html->script([
+            'Alt3/Swagger./lib/jquery-1.8.0.min.js',
+            'Alt3/Swagger./lib/jquery.slideto.min.js',
+            'Alt3/Swagger./lib/jquery.wiggle.min.js',
+            'Alt3/Swagger./lib/jquery.ba-bbq.min.js',
+            'Alt3/Swagger./lib/handlebars-2.0.0.js',
+            'Alt3/Swagger./lib/underscore-min.js',
+            'Alt3/Swagger./lib/backbone-min.js',
+            'Alt3/Swagger./swagger-ui.js',
+            'Alt3/Swagger./lib/highlight.7.3.pack.js',
+            'Alt3/Swagger./lib/marked.js',
+            'Alt3/Swagger./lib/swagger-oauth.js'
+        ], ['fullBase' => true]);
+
+    ?>
 
     <!-- Some basic translations -->
     <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
@@ -48,7 +64,6 @@
                 dom_id: "swagger-ui-container",
                 supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
                 onComplete: function(swaggerApi, swaggerUi){
-
                     if(typeof initOAuth == "function") {
                         initOAuth({
                             clientId: "your-client-id",
@@ -74,14 +89,15 @@
                 },
                 docExpansion: "none",
                 apisSorter: "alpha",
+                defaultModelRendering: 'schema',
                 showRequestHeaders: false
             });
 
             function addApiKeyAuthorization(){
                 var key = encodeURIComponent($('#input_apiKey')[0].value);
                 if(key && key.trim() != "") {
-                    var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("apikey", key, "query");
-                    window.swaggerUi.api.clientAuthorizations.add("apikey", apiKeyAuth);
+                    var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+                    window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
                     log("added key " + key);
                 }
             }
@@ -121,4 +137,3 @@
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 </body>
 </html>
-
