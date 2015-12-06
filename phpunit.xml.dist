@@ -8,11 +8,12 @@
 	>
 	<php>
 		<ini name="memory_limit" value="-1"/>
+		<ini name="apc.enable_cli" value="1"/>
 	</php>
 
 	<!-- Add any additional test suites you want to run here -->
 	<testsuites>
-		<testsuite name="CakePHP Swagger Tests">
+		<testsuite name="CakePHP Swagger Test Suite">
 			<directory>./tests/TestCase</directory>
 		</testsuite>
 		<!-- Add plugin test suites here. -->
@@ -29,13 +30,14 @@
 		</listener>
 	</listeners>
 
+	<!-- Prevent coverage reports from looking in tests and vendors -->
 	<filter>
 		<blacklist>
+			<directory suffix=".php">./tests/</directory>
+			<directory suffix=".ctp">./tests/</directory>
+
 			<directory suffix=".php">./vendor/</directory>
+			<directory suffix=".ctp">./vendor/</directory>
 		</blacklist>
-		<whitelist>
-			<directory suffix=".php">./tests/TestCase/</directory>
-			<directory suffix=".php">./src/</directory>
-		</whitelist>
 	</filter>
 </phpunit>
