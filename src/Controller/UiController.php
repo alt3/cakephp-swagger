@@ -25,7 +25,7 @@ class UiController extends AppController
         $this->set('config', static::$config['ui']);
 
         // make the first document autoload inside the UI
-        $defaultDocument = key(static::$config['documents']);
+        $defaultDocument = key(static::$config['library']);
         if (!$defaultDocument) {
             throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain any documents");
         }

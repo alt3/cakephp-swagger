@@ -19,7 +19,7 @@ class DocsController extends AppController
             throw new \InvalidArgumentException("cakephp-swagger document requires an argument");
         }
 
-        if (!array_key_exists($id, static::$config['documents'])) {
+        if (!array_key_exists($id, static::$config['library'])) {
             throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain a document for '$id'");
         }
 
@@ -35,13 +35,13 @@ class DocsController extends AppController
         // generate new document
         if (static::$config['noCache'] === true) {
             $swaggerOptions = null;
-            if (isset(static::$config['documents'][$id]['exclude'])) {
+            if (isset(static::$config['library'][$id]['exclude'])) {
                 $swaggerOptions = [
-                    'exclude' => static::$config['documents'][$id]['exclude']
+                    'exclude' => static::$config['library'][$id]['exclude']
                 ];
             }
 
-            $swagger = \Swagger\scan(static::$config['documents'][$id]['include'], $swaggerOptions);
+            $swagger = \Swagger\scan(static::$config['library'][$id]['include'], $swaggerOptions);
             Cache::delete($cacheKey);
             Cache::write($cacheKey, $swagger);
         }
