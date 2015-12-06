@@ -2,12 +2,16 @@
 
 use Cake\View\Helper\HtmlHelper;
 
+if (empty($config['title'])) {
+    $config['title'] = "cakephp-swagger";
+}
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Swagger UI</title>
+    <title><?= $config['title'] ?></title>
     <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
     <?php
