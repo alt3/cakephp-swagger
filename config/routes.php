@@ -1,5 +1,4 @@
 <?php
-
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
@@ -8,10 +7,9 @@ use Cake\Routing\Router;
  */
 $configFile = 'swagger';
 $configPath = CONFIG . $configFile . '.php';
-if (!file_exists($configPath)) {
-    throw new Exception("cakephp-swagger configuration file does not exist: $configPath");
+if (file_exists($configPath)) {
+    Configure::load($configFile, 'default');
 }
-Configure::load($configFile, 'default');
 
 /**
  * Connect routes:
@@ -37,11 +35,21 @@ Router::plugin('Alt3/Swagger', function ($routes) {
     // Documents route
     if (Configure::read('Swagger.docs.route')) {
         Router::connect(
+            Configure::read('Swagger.docs.route'),
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
+        );
+
+        Router::connect(
             Configure::read('Swagger.docs.route') . ':id',
             ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index'],
             ['id' => '\w+', 'pass' => ['id']]
         );
     } else {
+        Router::connect(
+            '/alt3/swagger/docs',
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
+        );
+
         Router::connect(
             '/alt3/swagger/docs/:id',
             ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index'],

@@ -41,6 +41,8 @@ class AppController extends BaseController
     public function initialize()
     {
         parent::initialize();
-        static::$config = array_merge(static::$config, Configure::read('Swagger'));
+        if (Configure::read('Swagger')) {
+            static::$config = array_merge(static::$config, Configure::read('Swagger'));
+        }
     }
 }

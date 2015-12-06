@@ -16,11 +16,15 @@ class DocsController extends AppController
     public function index($id = null)
     {
         if (!$id) {
-            throw new \InvalidArgumentException("cakephp-swagger document requires an argument");
+            throw new \InvalidArgumentException("Missing cakephp-swagger library document argument");
+        }
+
+        if (!isset(static::$config['library'])) {
+            throw new \InvalidArgumentException("cakephp-swagger library section missing in configuration file");
         }
 
         if (!array_key_exists($id, static::$config['library'])) {
-            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain a document for '$id'");
+            throw new \InvalidArgumentException("cakephp-swagger library does not contain a definition for '$id'");
         }
 
         // load document from cache
