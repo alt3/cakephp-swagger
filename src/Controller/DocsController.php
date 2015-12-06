@@ -50,10 +50,12 @@ class DocsController extends AppController
             Cache::write($cacheKey, $swagger);
         }
 
-        // set CORS headers unless disabled in config
-        if (count(static::$config['cors_headers'])) {
-            foreach (static::$config['cors_headers'] as $header => $value) {
-                header("$header: $value");
+        // set CORS headers if specified in config
+        if (isset(static::$config['docs']['cors'])) {
+            if (count(static::$config['docs']['cors'])) {
+                foreach (static::$config['docs']['cors'] as $header => $value) {
+                    header("$header: $value");
+                }
             }
         }
 

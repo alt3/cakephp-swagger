@@ -22,14 +22,8 @@ class AppController extends BaseController
      */
     public static $config = [
         'noCache' => true,
-        'documents' => [],
-        'cors_headers' => [
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => 'GET, POST',
-            'Access-Control-Allow-Headers' => 'X-Requested-With'
-        ],
         'ui' => [
-            'page_title' => 'cakephp-swagger'
+            'title' => 'cakephp-swagger'
         ]
     ];
 
