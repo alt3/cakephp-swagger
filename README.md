@@ -1,5 +1,7 @@
 # cakephp-swagger
 
+[![Build Status](https://img.shields.io/travis/alt3/cakephp-swagger/master.svg?style=flat-square)](https://travis-ci.org/alt3/cakephp-swagger)
+[![Coverage](https://img.shields.io/coveralls/alt3/cakephp-swagger/master.svg?style=flat-square)](https://coveralls.io/r/alt3/cakephp-swagger)
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
@@ -9,7 +11,7 @@ for your CakePHP 3.x APIs.
 ## Requirements
 
 * CakePHP 3.0+
-* [swagger-php](https://github.com/zircote/swagger-php) annotation knowledge
+* Some [swagger-php](https://github.com/zircote/swagger-php) annotation knowledge
 
 ## Installation
 

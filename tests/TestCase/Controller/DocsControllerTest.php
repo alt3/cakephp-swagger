@@ -1,19 +1,22 @@
 <?php
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
-use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * AppControllerTest class
+ * App\Controller\DocsControllerTest Test Case
  */
 class DocsControllerTest extends IntegrationTestCase
 {
     /**
-     *  @expectedException \InvalidArgumentException
-     */
-    public function testMissingIdDefaultRoute()
+     * Test swagger UI index using default route
+     *
+     * @return void
+     **/
+    public function testUiIndexDefaultRoute()
     {
-        $this->get('/alt3/swagger/docs');
+        $this->get('/alt3/swagger');
+        $this->assertResponseOk();
+        $this->assertResponseContains('<body class="swagger-section">');
     }
 }
