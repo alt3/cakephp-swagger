@@ -24,12 +24,14 @@ class UiController extends AppController
 
         $this->set('config', static::$config['ui']);
 
-        // make the first document autoload inside the UI
-        $defaultDocument = key(static::$config['library']);
-        if (!$defaultDocument) {
-            throw new \InvalidArgumentException("cakephp-swagger configuration file does not contain any documents");
+        // Load petstore document if library contains no entries
+        if (empty(static::$config['library'])) {
+            $this->set('url', 'http://petstore.swagger.io/v2/swagger.json');
+            return;
         }
 
+        // Otherwise load first document found in the library
+        $defaultDocument = key(static::$config['library']);
         $this->set('url', Router::url([
             'plugin' => 'Alt3/Swagger',
             'controller' => 'Docs',
