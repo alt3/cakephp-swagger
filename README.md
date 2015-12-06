@@ -49,10 +49,10 @@ return [
         'noCache' => Configure::read('debug'),
         'ui' => [
             'title' => 'ALT3 Swagger',
-            'route' => ''
+            'route' => /swagger/'
         ],
         'docs' => [
-            'route' => '',
+            'route' => '/swagger/docs/',
             'cors' => [
                 'Access-Control-Allow-Origin' => '*',
                 'Access-Control-Allow-Methods' => 'GET, POST',
