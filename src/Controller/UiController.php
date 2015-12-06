@@ -1,10 +1,8 @@
 <?php
 namespace Alt3\Swagger\Controller;
 
-use Alt3\Swagger\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Core\Exception;
-use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 
 /**

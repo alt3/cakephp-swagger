@@ -1,10 +1,8 @@
 <?php
 namespace Alt3\Swagger\Controller;
 
-use Alt3\Swagger\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 
 class DocsController extends AppController
 {
