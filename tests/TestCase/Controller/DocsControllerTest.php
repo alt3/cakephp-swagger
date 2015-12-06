@@ -12,7 +12,7 @@ class DocsControllerTest extends IntegrationTestCase
     /**
      *  @expectedException \InvalidArgumentException
      */
-    public function testMissingId()
+    public function testMissingIdDefaultRoute()
     {
         $this->get('/alt3/swagger/docs');
     }
