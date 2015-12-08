@@ -30,7 +30,7 @@ class UiController extends AppController
             return;
         }
 
-        // Otherwise load first document found in the library
+        // Set viewvar so first document in library auto-loads in UI
         $defaultDocument = key(static::$config['library']);
         $this->set('url', Router::url([
             'plugin' => 'Alt3/Swagger',

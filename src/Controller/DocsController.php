@@ -13,26 +13,43 @@ class DocsController extends AppController
      * @param string $id Name of swagger document to generate/serve
      * @return void
      */
-    public function index($id = null)
+    public function index($id)
     {
         if (!$id) {
-            throw new \InvalidArgumentException("Missing cakephp-swagger library document argument");
+            throw new \InvalidArgumentException("Missing cakephp-swagger library argument");
         }
 
         if (!isset(static::$config['library'])) {
-            throw new \InvalidArgumentException("cakephp-swagger library section missing in configuration file");
+            throw new \InvalidArgumentException("cakephp-swagger configuration misses library section");
         }
 
         if (!array_key_exists($id, static::$config['library'])) {
-            throw new \InvalidArgumentException("cakephp-swagger library does not contain a definition for '$id'");
+            throw new \InvalidArgumentException("cakephp-swagger configuration misses document definition for '$id'");
         }
 
+        $swagger = $this->getSwaggerDocument($id);
+        $this->setCorsHeaders();
+
+        // Serve swagger document in memory as json
+        header('Content-Type: application/json');
+        echo $swagger;
+        exit(0);
+    }
+
+    /**
+     * Return a swagger document from cache or by crawling.
+     *
+     * @param string $id Name of the document
+     * @return string
+     */
+    protected function getSwaggerDocument($id)
+    {
         // load document from cache
-        $cacheKey = $this->cachePrefix . $id;
+        $documentCacheKey = $this->cachePrefix . $id;
         if (static::$config['noCache'] === false) {
-            $swagger = Cache::read($cacheKey);
+            $swagger = Cache::read($documentCacheKey);
             if ($swagger === false) {
-                throw new \InvalidArgumentException("cakephp-swagger could not load document from cache using key $cacheKey");
+                throw new \InvalidArgumentException("cakephp-swagger could not load document from cache");
             }
         }
 
@@ -46,22 +63,30 @@ class DocsController extends AppController
             }
 
             $swagger = \Swagger\scan(static::$config['library'][$id]['include'], $swaggerOptions);
-            Cache::delete($cacheKey);
-            Cache::write($cacheKey, $swagger);
+            Cache::delete($documentCacheKey);
+            Cache::write($documentCacheKey, $swagger);
         }
+        return $swagger;
+    }
 
+    /**
+     * Set CORS headers if found in configuration
+     *
+     * @return bool|void
+     */
+    protected function setCorsHeaders()
+    {
         // set CORS headers if specified in config
-        if (isset(static::$config['docs']['cors'])) {
-            if (count(static::$config['docs']['cors'])) {
-                foreach (static::$config['docs']['cors'] as $header => $value) {
-                    header("$header: $value");
-                }
-            }
+        if (!isset(static::$config['docs']['cors'])) {
+            return false;
         }
 
-        // Serve swagger document in memory as json
-        header('Content-Type: application/json');
-        echo $swagger;
-        exit(0);
+        if (!count(static::$config['docs']['cors'])) {
+            return false;
+        }
+
+        foreach (static::$config['docs']['cors'] as $header => $value) {
+            header("$header: $value");
+        }
     }
 }
