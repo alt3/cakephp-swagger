@@ -84,7 +84,8 @@ return [
 
 Use the main section to customize the following options:
 
-- `noCache`: disable to serve json from cache instead of crawling, defaults to `true`
+- `noCache`: enable to generate new documents on every run instead of
+serving from cache, defaults to `true`
 
 ### UI section
 
