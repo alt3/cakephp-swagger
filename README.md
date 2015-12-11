@@ -5,8 +5,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
-Instant [Swagger-UI](https://github.com/swagger-api/swagger-ui) documentation
-for your CakePHP 3.x APIs.
+Swagger plugin for documenting your CakePHP 3.x APIs.
 
 ## Requirements
 
@@ -32,8 +31,8 @@ for your CakePHP 3.x APIs.
     ```bash
     Plugin::load('Alt3/Swagger', ['routes' => true]);
     ```
-3. If things went well browsing to
-`http://your.app/alt3/swagger` should now produce something similar to:
+3. Browsing to `http://your.app/alt3/swagger` should now produce the
+[Swagger-UI](http://swagger.io/swagger-ui/) interface:
 
     ![Default UI index](/docs/images/ui-index-default.png)
 
@@ -94,9 +93,6 @@ Use the `ui` section to customize the following options:
 - `title`: sets the Swagger-UI page title, defaults to `cakephp-swagger`
 - `route`: expose the UI using a custom route, defaults to `/alt3/swagger/`
 
-> **Note**: the UI will automatically load the first document
-> specified in the library section.
-
 ### Docs section
 
 Use the `docs` section to customize the following options:
@@ -140,12 +136,18 @@ The above library will result in:
     - `http://your.app/alt3/swagger/docs/api`
     - `http://your.app/alt3/swagger/docs/editor`
 
+> **Note**: the UI will auto-load the first document found in the library
+> section.
+
 ## Quickstart Annotation Example
 
 Explaining [swagger-php](https://github.com/zircote/swagger-php)
 annotation voodoo is beyond this plugin but to give yourself a head start while
 creating your first library document you might want to copy/paste the following
 working example into any of your php files.
+
+> **Note**: the weird non-starred syntax ensures
+> compatibility with the CakePHP Code Sniffer.
 
 ```php
 <?php

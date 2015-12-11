@@ -2,7 +2,6 @@
 namespace Alt3\Swagger\Controller;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception;
 use Cake\Routing\Router;
 
 /**
@@ -24,15 +23,22 @@ class UiController extends AppController
 
         $this->set('config', static::$config['ui']);
 
-        // Load petstore document if library contains no entries
+        $this->set('url', $this->getDefaultDocumentUrl());
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultDocumentUrl()
+    {
+        // Use Swagger petstore if library contains no entries
         if (empty(static::$config['library'])) {
-            $this->set('url', 'http://petstore.swagger.io/v2/swagger.json');
-            return;
+            return ('http://petstore.swagger.io/v2/swagger.json');
         }
 
-        // Set viewvar so first document in library auto-loads in UI
+        // Otherwise generate URL using first document in the library
         $defaultDocument = key(static::$config['library']);
-        $this->set('url', Router::url([
+        return (Router::url([
             'plugin' => 'Alt3/Swagger',
             'controller' => 'Docs',
             'action' => 'index',

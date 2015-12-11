@@ -1,7 +1,9 @@
 <?php
 /**
- * Swagger Test App routes.php
+ * test_app routes.php. Remove configuration settings from any previous tests
+ * before loading plugin routes.php file.
  */
+use Cake\Core\Configure;
 
-// Load plugin routes.php so we can use them for integration testing
+Configure::delete('Swagger');
 require ROOT . 'config/routes.php';

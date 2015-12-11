@@ -1,0 +1,23 @@
+<?php
+/**
+ * Template for temporary swagger.php configuration file used by test_app for
+ * integration testing custom docs route, swagger-crawling and CORS headers.
+ */
+
+return [
+    'Swagger' => [
+        'docs' => [
+            'route' => '/custom-docs-route/',
+            'cors' => [
+                'Access-Control-Allow-Origin' => '*',
+                'Access-Control-Allow-Methods' => 'GET, POST',
+                'Access-Control-Allow-Headers' => 'X-Requested-With'
+            ]
+        ],
+        'library' => [
+            'testdoc' => [
+                'include' => APP . DS . 'src'
+            ]
+        ]
+    ]
+];

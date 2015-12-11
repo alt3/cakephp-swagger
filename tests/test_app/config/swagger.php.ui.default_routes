@@ -1,0 +1,13 @@
+<?php
+/**
+ * Template for temporary swagger.php configuration file used by test_app
+ * for integration testing the default UI route.
+ */
+
+return [
+    'Swagger' => [
+        'ui' => [
+            'route' => '/alt3/swagger/'
+        ]
+    ]
+];

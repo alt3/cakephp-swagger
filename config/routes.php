@@ -12,7 +12,8 @@ if (file_exists($configPath)) {
 }
 
 /**
- * Connect routes:
+ * Connect routes using configuration file, otherwise use defaults:
+ *
  * - UI, defaults to /alt3/swagger
  * - docs, defaults to /alt3/swagger/docs
  * - per library document, defaults to /alt3/swagger/docs/:id

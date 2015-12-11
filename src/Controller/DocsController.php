@@ -11,6 +11,7 @@ class DocsController extends AppController
      * Index action.
      *
      * @param string $id Name of swagger document to generate/serve
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function index($id)
@@ -27,45 +28,42 @@ class DocsController extends AppController
             throw new \InvalidArgumentException("cakephp-swagger configuration misses document definition for '$id'");
         }
 
-        $swagger = $this->getSwaggerDocument($id);
-        $this->setCorsHeaders();
-
-        // Serve swagger document in memory as json
-        header('Content-Type: application/json');
-        echo $swagger;
-        exit(0);
+        $this->set('swaggerString', $this->getSwaggerDocument($id));
+        $this->viewBuilder()->layout(false);
+        $this->addCorsHeaders();
+        $this->response->type('json');
     }
 
     /**
      * Return a swagger document from cache or by crawling.
      *
      * @param string $id Name of the document
+     * @throws \InvalidArgumentException
      * @return string
      */
     protected function getSwaggerDocument($id)
     {
-        // load document from cache
         $documentCacheKey = $this->cachePrefix . $id;
+
+        // either try loading document from cache
         if (static::$config['noCache'] === false) {
             $swagger = Cache::read($documentCacheKey);
             if ($swagger === false) {
                 throw new \InvalidArgumentException("cakephp-swagger could not load document from cache");
             }
+            return $swagger;
         }
 
-        // generate new document
-        if (static::$config['noCache'] === true) {
-            $swaggerOptions = null;
-            if (isset(static::$config['library'][$id]['exclude'])) {
-                $swaggerOptions = [
-                    'exclude' => static::$config['library'][$id]['exclude']
-                ];
-            }
-
-            $swagger = \Swagger\scan(static::$config['library'][$id]['include'], $swaggerOptions);
-            Cache::delete($documentCacheKey);
-            Cache::write($documentCacheKey, $swagger);
+        // or crawl-generate a fresh document
+        $swaggerOptions = null;
+        if (isset(static::$config['library'][$id]['exclude'])) {
+            $swaggerOptions = [
+                'exclude' => static::$config['library'][$id]['exclude']
+            ];
         }
+
+        $swagger = \Swagger\scan(static::$config['library'][$id]['include'], $swaggerOptions);
+        Cache::write($documentCacheKey, $swagger);
         return $swagger;
     }
 
@@ -74,7 +72,7 @@ class DocsController extends AppController
      *
      * @return bool|void
      */
-    protected function setCorsHeaders()
+    protected function addCorsHeaders()
     {
         // set CORS headers if specified in config
         if (!isset(static::$config['docs']['cors'])) {
@@ -86,7 +84,7 @@ class DocsController extends AppController
         }
 
         foreach (static::$config['docs']['cors'] as $header => $value) {
-            header("$header: $value");
+            $this->response->header($header, $value);
         }
     }
 }

@@ -18,14 +18,19 @@ class AppController extends BaseController
     protected $cachePrefix = '_cakephp_swagger_';
 
     /**
-     * @var array
+     * @var array default configuration settings.
      */
-    public static $config = [
+    public static $defaultConfig = [
         'noCache' => true,
         'ui' => [
             'title' => 'cakephp-swagger'
         ]
     ];
+
+    /**
+     * @var array holding merged configuration.
+     */
+    public static $config;
 
     /**
      * Initialization hook method.
@@ -35,8 +40,9 @@ class AppController extends BaseController
     public function initialize()
     {
         parent::initialize();
+
         if (Configure::read('Swagger')) {
-            static::$config = array_merge(static::$config, Configure::read('Swagger'));
+            static::$config = array_merge(static::$defaultConfig, Configure::read('Swagger'));
         }
     }
 }

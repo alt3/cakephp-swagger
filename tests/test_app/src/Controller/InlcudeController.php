@@ -1,5 +1,8 @@
 <?php
 /**
+ * Dummy test_app controller required for crawl-generated swagger document.
+ *
+ *
     @SWG\Swagger(
         @SWG\Info(
             title="cakephp-swagger",
