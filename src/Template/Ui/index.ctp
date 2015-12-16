@@ -7,6 +7,10 @@ if (empty($userConfig['title'])) {
     $userConfig['title'] = "cakephp-swagger";
 }
 
+if (!isset($userConfig['showValidator'])) {
+    $userConfig['showValidator'] = true;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,6 +83,9 @@ if (empty($userConfig['title'])) {
             }
             window.swaggerUi = new SwaggerUi({
                 url: url,
+                <?php if ($userConfig['showValidator'] === false) : ?>
+                    validatorUrl: false,
+                <?php endif ?>
                 dom_id: "swagger-ui-container",
                 supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
                 onComplete: function(swaggerApi, swaggerUi){
