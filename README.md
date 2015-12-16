@@ -51,7 +51,8 @@ return [
         'ui' => [
             'title' => 'ALT3 Swagger',
             'route' => /swagger/',
-            'schemes' => ['https', 'http']
+            'schemes' => ['https', 'http'],
+            'showValidator' => true
         ],
         'docs' => [
             'route' => '/swagger/docs/',
@@ -96,7 +97,7 @@ Use the `ui` section to customize the following options:
 - `schemes`: array used to specify third field
 [used by the UI to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
 (`host` and `basePath` are fetched realtime), defaults to `null`
-
+- `showValidator`: enable/disable the online validator, defaults to `true`
 ### Docs section
 
 Use the `docs` section to customize the following options:
