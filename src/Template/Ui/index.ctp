@@ -1,9 +1,10 @@
 <?php
 
 use Cake\View\Helper\HtmlHelper;
+use Cake\View\Helper\UrlHelper;
 
-if (empty($config['title'])) {
-    $config['title'] = "cakephp-swagger";
+if (empty($userConfig['title'])) {
+    $userConfig['title'] = "cakephp-swagger";
 }
 
 ?>
@@ -11,37 +12,50 @@ if (empty($config['title'])) {
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?= $config['title'] ?></title>
-    <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+    <title><?= $userConfig['title'] ?></title>
     <?php
 
-        // screen stylesheets
-        echo $this->Html->css([
-            'Alt3/Swagger.typography.css',
-            'Alt3/Swagger.reset.css',
-            'Alt3/Swagger.screen.css'
-        ], ['media' => 'screen', 'once' => false, 'fullBase' => true]);
+    // favicons
+    echo $this->Html->meta([
+        'link' => $this->Url->assetUrl('Alt3/Swagger./images/favicon-32x32.png', ['fullBase' => true]),
+        'rel' => 'icon',
+        'sizes' => '32x32',
+        'type' => 'image/png',
+    ]);
+    echo $this->Html->meta([
+        'link' => $this->Url->assetUrl('Alt3/Swagger./images/favicon-16x16.png', ['fullBase' => true]),
+        'rel' => 'icon',
+        'sizes' => '16x16',
+        'type' => 'image/png'
+    ]);
 
-        // print stylesheet
-        echo $this->Html->css([
-            'Alt3/Swagger.reset.css',
-            'Alt3/Swagger.print.css',
-        ], ['media' => 'print', 'once' => false, 'fullBase' => true]);
+    // screen stylesheets
+    echo $this->Html->css([
+        'Alt3/Swagger.typography.css',
+        'Alt3/Swagger.reset.css',
+        'Alt3/Swagger.screen.css'
+    ], ['media' => 'screen', 'once' => false, 'fullBase' => true]);
 
-        echo $this->Html->script([
-            'Alt3/Swagger./lib/jquery-1.8.0.min.js',
-            'Alt3/Swagger./lib/jquery.slideto.min.js',
-            'Alt3/Swagger./lib/jquery.wiggle.min.js',
-            'Alt3/Swagger./lib/jquery.ba-bbq.min.js',
-            'Alt3/Swagger./lib/handlebars-2.0.0.js',
-            'Alt3/Swagger./lib/underscore-min.js',
-            'Alt3/Swagger./lib/backbone-min.js',
-            'Alt3/Swagger./swagger-ui.js',
-            'Alt3/Swagger./lib/highlight.7.3.pack.js',
-            'Alt3/Swagger./lib/marked.js',
-            'Alt3/Swagger./lib/swagger-oauth.js'
-        ], ['fullBase' => true]);
+    // print stylesheet
+    echo $this->Html->css([
+        'Alt3/Swagger.reset.css',
+        'Alt3/Swagger.print.css',
+    ], ['media' => 'print', 'once' => false, 'fullBase' => true]);
+
+    // javascript libraries
+    echo $this->Html->script([
+        'Alt3/Swagger./lib/jquery-1.8.0.min.js',
+        'Alt3/Swagger./lib/jquery.slideto.min.js',
+        'Alt3/Swagger./lib/jquery.wiggle.min.js',
+        'Alt3/Swagger./lib/jquery.ba-bbq.min.js',
+        'Alt3/Swagger./lib/handlebars-2.0.0.js',
+        'Alt3/Swagger./lib/underscore-min.js',
+        'Alt3/Swagger./lib/backbone-min.js',
+        'Alt3/Swagger./swagger-ui.js',
+        'Alt3/Swagger./lib/highlight.7.3.pack.js',
+        'Alt3/Swagger./lib/marked.js',
+        'Alt3/Swagger./lib/swagger-oauth.js'
+    ], ['fullBase' => true]);
 
     ?>
 
