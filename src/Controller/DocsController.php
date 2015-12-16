@@ -61,8 +61,13 @@ class DocsController extends AppController
                 'exclude' => static::$config['library'][$id]['exclude']
             ];
         }
-
         $swagger = \Swagger\scan(static::$config['library'][$id]['include'], $swaggerOptions);
+
+        // set properties required by UI to generate the BASE URL
+        $swagger->host = $this->request->host();
+        $swagger->basePath = '/' . Configure::read('App.base');
+        $swagger->schemes = Configure::read('Swagger.ui.schemes');
+
         Cache::write($documentCacheKey, $swagger);
         return $swagger;
     }

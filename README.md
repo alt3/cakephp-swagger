@@ -50,7 +50,8 @@ return [
         'noCache' => Configure::read('debug'),
         'ui' => [
             'title' => 'ALT3 Swagger',
-            'route' => /swagger/'
+            'route' => /swagger/',
+            'schemes' => ['https', 'http']
         ],
         'docs' => [
             'route' => '/swagger/docs/',
@@ -92,6 +93,9 @@ Use the `ui` section to customize the following options:
 
 - `title`: sets the Swagger-UI page title, defaults to `cakephp-swagger`
 - `route`: expose the UI using a custom route, defaults to `/alt3/swagger/`
+- `schemes`: array used to specify third field
+[used by the UI to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
+(`host` and `basePath` are fetched realtime), defaults to `null`
 
 ### Docs section
 
