@@ -9,17 +9,12 @@ class AppController extends BaseController
 {
 
     /**
-     * @var string
+     * @var array that will hold merged configuration settings.
      */
-    protected $configFile = 'swagger';
 
+    public static $config;
     /**
-     * @var string
-     */
-    protected $filePrefix = 'cakephp_swagger_';
-
-    /**
-     * @var array default configuration settings.
+     * @var array holding required default configuration settings.
      */
     public static $defaultConfig = [
         'docs' => [
@@ -29,11 +24,6 @@ class AppController extends BaseController
             'title' => 'cakephp-swagger'
         ]
     ];
-
-    /**
-     * @var array holding merged configuration.
-     */
-    public static $config;
 
     /**
      * Initialization hook method.
