@@ -5,7 +5,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
-Swagger plugin for documenting your CakePHP 3.x APIs.
+CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your projects using swagger-php and swagger-ui.
 
 ## Requirements
 
@@ -47,7 +47,6 @@ use Cake\Core\Configure;
 
 return [
     'Swagger' => [
-        'noCache' => Configure::read('debug'),
         'ui' => [
             'title' => 'ALT3 Swagger',
             'route' => '/swagger/',
@@ -55,6 +54,7 @@ return [
             'showValidator' => true
         ],
         'docs' => [
+            'crawl' => Configure::read('debug'),
             'route' => '/swagger/docs/',
             'cors' => [
                 'Access-Control-Allow-Origin' => '*',
@@ -81,13 +81,6 @@ return [
 ];
 ```
 
-### Main section
-
-Use the main section to customize the following options:
-
-- `noCache`: enable to generate new documents on every run instead of
-serving from cache, defaults to `true`
-
 ### UI section
 
 Use the `ui` section to customize the following options:
@@ -103,6 +96,8 @@ Use the `ui` section to customize the following options:
 
 Use the `docs` section to customize the following options:
 
+- `crawl`: enable to crawl-generate new documents instead of
+serving from filesystem, defaults to `true`
 - `route`: expose the documents using a custom route, defaults to `/alt3/swagger/docs/`
 - `cors`: specify CORS headers to send with the json responses, defaults to `null`
 

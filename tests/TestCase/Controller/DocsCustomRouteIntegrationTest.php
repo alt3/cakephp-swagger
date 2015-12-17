@@ -26,11 +26,17 @@ class UiControllerCustomDocsRouteTest extends IntegrationTestCase
     }
 
     /**
-     * tearDown method.
+     * tearDown method executed after every test method.
      */
     public function tearDown()
     {
+        parent::tearDown();
         unlink($this->tempConfig);
+
+        $testDoc = CACHE . 'cakephp_swagger_testdoc.json';
+        if (file_exists($testDoc)) {
+            unlink($testDoc);
+        }
     }
 
     /**
