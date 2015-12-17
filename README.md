@@ -51,7 +51,7 @@ return [
             'title' => 'ALT3 Swagger',
             'route' => '/swagger/',
             'schemes' => ['http', 'https'],
-            'showValidator' => true
+            'validator' => true
         ],
         'docs' => [
             'crawl' => Configure::read('debug'),
@@ -90,7 +90,7 @@ Use the `ui` section to customize the following options:
 - `schemes`: array used to specify third field
 [used by the UI to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
 (`host` and `basePath` are fetched realtime), defaults to `null`
-- `showValidator`: show/disable the online validator, defaults to `true`
+- `validator`: enable/disable the online validator, defaults to `true`
 
 ### Docs section
 

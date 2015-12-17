@@ -20,7 +20,7 @@ class UiController extends AppController
     public function index()
     {
         $this->viewBuilder()->layout(false);
-        $this->set('userConfig', static::$config['ui']);
+        $this->set('uiConfig', static::$config['ui']);
         $this->set('url', $this->getDefaultDocumentUrl());
     }
 

@@ -7,8 +7,8 @@ if (empty($userConfig['title'])) {
     $userConfig['title'] = "cakephp-swagger";
 }
 
-if (!isset($userConfig['showValidator'])) {
-    $userConfig['showValidator'] = true;
+if (!isset($uiConfig['validator'])) {
+    $uiConfig['validator'] = true;
 }
 
 ?>
@@ -83,7 +83,7 @@ if (!isset($userConfig['showValidator'])) {
             }
             window.swaggerUi = new SwaggerUi({
                 url: url,
-                <?php if ($userConfig['showValidator'] === false) : ?>
+                <?php if ($uiConfig['validator'] === false) : ?>
                     validatorUrl: false,
                 <?php endif ?>
                 dom_id: "swagger-ui-container",
