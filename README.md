@@ -154,9 +154,6 @@ working example into any of your php files.
 <?php
 /**
     @SWG\Swagger(
-        basePath="v0",
-        host="api.ecloud.app",
-        schemes={"http"},
         @SWG\Info(
             title="cakephp-swagger",
             description="Quickstart annotation example",
@@ -229,7 +226,6 @@ Which should result in:
 
 Before submitting a PR make sure:
 
-- [PHPUnit](http://book.cakephp.org/3.0/en/development/testing.html#running-tests) tests pass
-- [CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer) tests pass
+- [PHPUnit](http://book.cakephp.org/3.0/en/development/testing.html#running-tests)
+and [CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer) tests pass
 - [Coveralls Code Coverage ](https://coveralls.io/github/alt3/cakephp-swagger) remains at 100%
-
