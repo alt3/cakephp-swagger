@@ -4,6 +4,7 @@ namespace Alt3\Swagger\Test\TestCase\Controller;
 use Alt3\Swagger\Controller\DocsController;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Filesystem\File;
 use Cake\TestSuite\TestCase;
 use StdClass;
 
@@ -19,6 +20,18 @@ class DocsControllerTest extends TestCase
             'title' => 'cakephp-swagger'
         ]
     ];
+
+    /**
+     * tearDown method executed after every testMethod
+     */
+    public function tearDown()
+    {
+        parent::tearDownAfterClass();
+        $testDoc = CACHE . 'cakephp_swagger_testdoc.json';
+        if (file_exists($testDoc)) {
+            unlink($testDoc);
+        }
+    }
 
     /**
      * Make sure calling docs page without :id parameter throws an exception.
@@ -72,7 +85,9 @@ class DocsControllerTest extends TestCase
         $controller = new DocsController();
         $reflection = $reflection = $this->getReflection($controller, 'getSwaggerDocument', 'config');
         $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
-            'noCache' => true,
+            'docs' => [
+                'crawl' => true
+            ],
             'library' => [
                 'testdoc' => [
                      'include' => APP . 'src', // all files in dir
@@ -80,7 +95,7 @@ class DocsControllerTest extends TestCase
             ]
         ]));
 
-        // makse sure all files are being crawled
+        // make sure all files are being crawled
         $result = $reflection->method->invokeArgs($controller, ['testdoc']);
         $this->assertTextEquals($result->info->description, 'cakephp-swagger test document'); // IncludeController
         $this->assertTextEquals($result->paths[0]->path, '/taxis'); // ExcludeController
@@ -88,7 +103,9 @@ class DocsControllerTest extends TestCase
         // make sure exclusions are actually being excluded from crawling.
         $config = $reflection->property->getValue($controller);
         $reflection->property->setValue($controller, array_merge($config, [
-            'noCache' => true,
+            'docs' => [
+                'crawl' => true
+            ],
             'library' => [
                 'testdoc' => [
                     'include' => APP . 'src',
@@ -102,19 +119,35 @@ class DocsControllerTest extends TestCase
     }
 
     /**
-     * Make sure requesting a document that is not found in cache throws an
-     * exception in non-development mode.
+     * Make sure an exception is thrown when swagger document cannot be
+     * written to the filesystem.
      *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage cakephp-swagger could not load document from cache
+     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @expectedExceptionMessage Error creating Swagger document on filesystem
      **/
-    public function testMethodGetSwaggerDocumentFromCacheFail()
+    public function testMethodWriteSwaggerDocumentToFileFail()
+    {
+        $controller = new DocsController();
+        $reflection = $reflection = $this->getReflection($controller, 'writeSwaggerDocumentToFile');
+        $reflection->method->invokeArgs($controller, ['////failing-doc-path', 'dummy-file-content']);
+    }
+
+    /**
+     * Make sure requesting a document that does not exist on the filesystem
+     * throws an exception in non-development mode.
+     *
+     * @expectedException \Cake\Network\Exception\NotFoundException
+     * @expectedExceptionMessageRegExp #Swagger file does not exist: *#
+     **/
+    public function testMethodGetSwaggerDocumentFromFileFail()
     {
         $controller = new DocsController();
         $reflection = $this->getIndexReflection($controller);
         $randomDocument = rand(0, 10000000);
         $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
-            'noCache' => false, // enable caching
+            'docs' => [
+                'crawl' => false // force loading doc from filesystem
+            ],
             'library' => [
                 $randomDocument => []
             ]
@@ -123,40 +156,48 @@ class DocsControllerTest extends TestCase
     }
 
     /**
-     * Make sure swagger documents are successfully served from cache.
+     * Make sure swagger documents are successfully served from filesystem.
      *
      * @return void
      **/
-    public function testMethodGetSwaggerDocumentFromCacheSuccess()
+    public function testMethodGetSwaggerDocumentFromFileSuccess()
     {
+        // make sure test file does not exist
+        $filePath = CACHE . 'cakephp_swagger_testdoc.json';
+        $this->assertFileNotExists($filePath);
+
+        // crawl-generate fresh json file
         $controller = new DocsController();
         $reflection = $reflection = $this->getReflection($controller, 'getSwaggerDocument', 'config');
         $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
-            'noCache' => true,
+            'docs' => [
+                'crawl' => true
+            ],
             'library' => [
                 'testdoc' => [
                     'include' => APP . 'src', // all files in dir
                 ]
             ]
         ]));
-
-        // crawl-generate document in realtime first
-        Cache::delete('_cakephp_swagger_testdoc', 'default');
         $result = $reflection->method->invokeArgs($controller, ['testdoc']);
+        $this->assertFileExists($filePath);
         $this->assertTextEquals($result->info->description, 'cakephp-swagger test document');
 
-        // fetch document from cache
+        // file is present now so it should be loaded from the filesystem
         $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
-            'noCache' => false,
+            'docs' => [
+                'crawl' => false
+            ],
             'library' => [
-                'cachedoc' => [
+                'testdoc' => [
                     'include' => APP . 'src', // crawl all files in this directory
                 ]
             ]
         ]));
         $reflection->method->invokeArgs($controller, ['testdoc']);
-        $cachedDocument = Cache::read('_cakephp_swagger_testdoc');
-        $this->assertTextEquals($cachedDocument->info->description, 'cakephp-swagger test document'); // IncludeController
+        $fh = new File($filePath);
+        $fileContent = $fh->read();
+        $this->assertContains('cakephp-swagger test document', $fileContent); // Annotation from IncludeController
     }
 
     /**

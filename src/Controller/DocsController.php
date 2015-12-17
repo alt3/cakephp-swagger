@@ -3,6 +3,9 @@ namespace Alt3\Swagger\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Filesystem\File;
+use Cake\Network\Exception\InternalErrorException;
+use Cake\Network\Exception\NotFoundException;
 
 class DocsController extends AppController
 {
@@ -35,7 +38,7 @@ class DocsController extends AppController
     }
 
     /**
-     * Return a swagger document from cache or by crawling.
+     * Returns a swagger document from filesystem or crawl-generates a fresh one.
      *
      * @param string $id Name of the document
      * @throws \InvalidArgumentException
@@ -43,18 +46,17 @@ class DocsController extends AppController
      */
     protected function getSwaggerDocument($id)
     {
-        $documentCacheKey = $this->cachePrefix . $id;
-
-        // either try loading document from cache
-        if (static::$config['noCache'] === false) {
-            $swagger = Cache::read($documentCacheKey);
-            if ($swagger === false) {
-                throw new \InvalidArgumentException("cakephp-swagger could not load document from cache");
+        // load document from filesystem
+        $filePath = CACHE . $this->filePrefix . $id . '.json';
+        if (!static::$config['docs']['crawl']) {
+            if (!file_exists($filePath)) {
+                throw new NotFoundException("Swagger file does not exist: $filePath");
             }
-            return $swagger;
+            $fh = new File($filePath);
+            return $fh->read();
         }
 
-        // or crawl-generate a fresh document
+        // otherwise crawl-generate a fresh document
         $swaggerOptions = null;
         if (isset(static::$config['library'][$id]['exclude'])) {
             $swaggerOptions = [
@@ -68,8 +70,26 @@ class DocsController extends AppController
         $swagger->basePath = '/' . Configure::read('App.base');
         $swagger->schemes = Configure::read('Swagger.ui.schemes');
 
-        Cache::write($documentCacheKey, $swagger);
+        // write document to filesystem
+        $this->writeSwaggerDocumentToFile($filePath, $swagger);
         return $swagger;
+    }
+
+    /**
+     * Write swagger document to filesystem.
+     *
+     * @param string $path Full path to the json document including filename
+     * @param string $content Swagger content
+     * @throws Cake\Network\Exception\InternalErrorException
+     * @return bool
+     */
+    protected function writeSwaggerDocumentToFile($path, $content)
+    {
+        $fh = new File($path, true);
+        if (!$fh->write($content)) {
+            throw new InternalErrorException('Error creating Swagger document on filesystem');
+        }
+        return true;
     }
 
     /**
