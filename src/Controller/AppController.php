@@ -11,7 +11,6 @@ class AppController extends BaseController
     /**
      * @var array that will hold merged configuration settings.
      */
-
     public static $config;
     /**
      * @var array holding required default configuration settings.

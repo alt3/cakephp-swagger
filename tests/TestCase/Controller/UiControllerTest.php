@@ -2,15 +2,13 @@
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Alt3\Swagger\Controller\UiController;
-use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use StdClass;
 
 class UiControllerTest extends TestCase
 {
-
     /**
-     * Make sure the UI will auto-load the correct default document URL
+     * Make sure the UI will auto-load the correct default document URL.
      *
      * @return void
      **/
@@ -52,6 +50,7 @@ class UiControllerTest extends TestCase
             $obj->property = $obj->class->getProperty($property);
             $obj->property->setAccessible(true);
         }
+
         return $obj;
     }
 }

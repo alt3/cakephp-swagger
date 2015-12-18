@@ -25,11 +25,11 @@ class DocsController extends AppController
     public function index($id = null)
     {
         if (!$id) {
-            throw new \InvalidArgumentException("Missing required argument holding Swagger document name");
+            throw new \InvalidArgumentException('Missing required argument holding Swagger document name');
         }
 
         if (!isset(static::$config['library'])) {
-            throw new \InvalidArgumentException("Swagger configuration file does not contain a library section");
+            throw new \InvalidArgumentException('Swagger configuration file does not contain a library section');
         }
 
         if (!array_key_exists($id, static::$config['library'])) {
@@ -58,6 +58,7 @@ class DocsController extends AppController
                 throw new NotFoundException("Swagger json document was not found on filesystem: $filePath");
             }
             $fh = new File($filePath);
+
             return $fh->read();
         }
 
@@ -77,6 +78,7 @@ class DocsController extends AppController
 
         // write document to filesystem
         $this->writeSwaggerDocumentToFile($filePath, $swagger);
+
         return $swagger;
     }
 
@@ -94,11 +96,12 @@ class DocsController extends AppController
         if (!$fh->write($content)) {
             throw new InternalErrorException('Error writing Swagger json document to filesystem');
         }
+
         return true;
     }
 
     /**
-     * Set CORS headers if found in configuration
+     * Set CORS headers if found in configuration.
      *
      * @return bool|void
      */

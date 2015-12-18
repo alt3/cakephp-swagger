@@ -5,12 +5,9 @@ use Cake\Routing\Router;
 
 /**
  * UiController class responsible for serving the swagger-ui template page.
- *
- * @package Alt3\Swagger\Controller
  */
 class UiController extends AppController
 {
-
     /**
      * Index action used for setting template variables.
      *
@@ -30,16 +27,17 @@ class UiController extends AppController
     {
         // Use Swagger petstore if library contains no entries
         if (empty(static::$config['library'])) {
-            return ('http://petstore.swagger.io/v2/swagger.json');
+            return 'http://petstore.swagger.io/v2/swagger.json';
         }
 
         // Otherwise generate URL using first document in the library
         $defaultDocument = key(static::$config['library']);
-        return (Router::url([
+
+        return Router::url([
             'plugin' => 'Alt3/Swagger',
             'controller' => 'Docs',
             'action' => 'index',
             $defaultDocument
-        ], true));
+        ], true);
     }
 }

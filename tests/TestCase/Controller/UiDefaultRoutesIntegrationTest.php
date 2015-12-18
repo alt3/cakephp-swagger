@@ -1,11 +1,7 @@
 <?php
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
-use Alt3\Swagger\Controller\UiController as UiControllerDefaultRoute;
-use Cake\Core\Configure;
-use Cake\Routing\RouteCollection;
 use Cake\TestSuite\IntegrationTestCase;
-use Cake\TestSuite\TestCase;
 
 class UiControllerDefaultRouteTest extends IntegrationTestCase
 {
@@ -36,7 +32,7 @@ class UiControllerDefaultRouteTest extends IntegrationTestCase
     }
 
     /**
-     * Make sure the default UI route is connected and serves Petstore document
+     * Make sure the default UI route is connected and serves Petstore document.
      *
      * @return void
      **/
