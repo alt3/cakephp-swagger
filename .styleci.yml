@@ -17,3 +17,4 @@ disabled:
   - phpdoc_separation
   - no_blank_lines_after_class_opening
   - multiline_array_trailing_comma
+  - phpdoc_trim
