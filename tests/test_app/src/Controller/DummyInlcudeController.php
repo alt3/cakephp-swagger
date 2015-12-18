@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Dummy test_app controller required for crawl-generated swagger document.
+ * Dummy test_app controller only used for crawl-generating a swagger document.
  *
  *
     @SWG\Swagger(
@@ -60,3 +61,7 @@
         )
     )
  */
+class DummyIncludeController
+{
+
+}
