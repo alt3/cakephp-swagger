@@ -1,7 +1,6 @@
 <?php
 namespace Alt3\Swagger\Controller;
 
-use Cake\Core\Configure;
 use Cake\Routing\Router;
 
 /**
