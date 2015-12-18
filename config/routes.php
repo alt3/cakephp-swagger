@@ -2,7 +2,7 @@
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
-/**
+/*
  * Load app-specific configuration file
  */
 $config = 'swagger';
@@ -11,7 +11,7 @@ if (file_exists($configPath)) {
     Configure::load($config, 'default');
 }
 
-/**
+/*
  * Connect routes using configuration file, otherwise use defaults:
  *
  * - UI, defaults to /alt3/swagger

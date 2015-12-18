@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Dummy test_app controller required for crawl-generated swagger document.
  *
  *

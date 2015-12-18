@@ -1,8 +1,6 @@
 <?php
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
-use Alt3\Swagger\Controller\UiController as UiControllerCustomUiRoute;
-use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase;
 
 class UiControllerCustomUiRouteTest extends IntegrationTestCase
@@ -34,7 +32,7 @@ class UiControllerCustomUiRouteTest extends IntegrationTestCase
     }
 
     /**
-     * Make sure the custom UI route is connected and serves Petstore document
+     * Make sure the custom UI route is connected and serves Petstore document.
      *
      * @return void
      **/
@@ -48,7 +46,7 @@ class UiControllerCustomUiRouteTest extends IntegrationTestCase
     }
 
     /**
-     * Make sure the default UI route is no longer connected
+     * Make sure the default UI route is no longer connected.
      *
      * @return void
      */

@@ -1,7 +1,7 @@
 <?php
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org).
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
@@ -14,7 +14,6 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
-use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
 
@@ -35,7 +34,7 @@ define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP);
 
-$loader = new \Cake\Core\ClassLoader;
+$loader = new \Cake\Core\ClassLoader();
 $loader->register();
 
 $loader->addNamespace('TestApp', APP);
@@ -99,7 +98,6 @@ $config = [
 // Use the test connection for 'debug_kit' as well.
 ConnectionManager::config('test', $config);
 ConnectionManager::config('test_debug_kit', $config);
-
 
 Log::config([
     'debug' => [

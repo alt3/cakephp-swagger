@@ -1,8 +1,6 @@
 <?php
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
-use Alt3\Swagger\Controller\UiController as UiControllerCustomDocsRoute;
-use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase;
 
 class UiControllerCustomDocsRouteTest extends IntegrationTestCase
