@@ -109,7 +109,7 @@ class DocsControllerTest extends TestCase
             'library' => [
                 'testdoc' => [
                     'include' => APP . 'src',
-                    'exclude' => APP . 'src' . DS . 'Controller' . DS . 'ExcludeController'
+                    'exclude' => APP . 'src' . DS . 'Controller' . DS . 'DummyExcludeController'
                 ]
             ]
         ]));
