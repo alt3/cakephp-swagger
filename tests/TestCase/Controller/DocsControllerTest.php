@@ -3,7 +3,6 @@ namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Alt3\Swagger\Controller\DocsController;
 use Cake\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\TestSuite\TestCase;
 use StdClass;
@@ -22,7 +21,7 @@ class DocsControllerTest extends TestCase
     ];
 
     /**
-     * tearDown method executed after every testMethod
+     * tearDown method executed after every testMethod.
      */
     public function tearDown()
     {
@@ -243,6 +242,7 @@ class DocsControllerTest extends TestCase
             $obj->property = $obj->class->getProperty($property);
             $obj->property->setAccessible(true);
         }
+
         return $obj;
     }
 
@@ -257,6 +257,7 @@ class DocsControllerTest extends TestCase
         $controller = new DocsController();
         $reflection = $reflection = $this->getReflection($controller, 'index', 'config');
         $reflection->property->setValue($controller, $this->defaultConfig);
+
         return $reflection;
     }
 }
