@@ -49,9 +49,9 @@ return [
     'Swagger' => [
         'ui' => [
             'title' => 'ALT3 Swagger',
+            'validator' => true,
             'route' => '/swagger/',
-            'schemes' => ['http', 'https'],
-            'validator' => true
+            'schemes' => ['http', 'https']
         ],
         'docs' => [
             'crawl' => Configure::read('debug'),
@@ -86,11 +86,11 @@ return [
 Use the `ui` section to customize the following options:
 
 - `title`: sets the Swagger-UI page title, defaults to `cakephp-swagger`
+- `validator`: show/hide the validator image, defaults to `true`
 - `route`: expose the UI using a custom route, defaults to `/alt3/swagger/`
 - `schemes`: array used to specify third field
 [used by the UI to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
 (`host` and `basePath` are fetched realtime), defaults to `null`
-- `validator`: enable/disable the online validator, defaults to `true`
 
 ### Docs section
 
@@ -154,9 +154,6 @@ working example into any of your php files.
 <?php
 /**
     @SWG\Swagger(
-        basePath="v0",
-        host="api.ecloud.app",
-        schemes={"http"},
         @SWG\Info(
             title="cakephp-swagger",
             description="Quickstart annotation example",
@@ -227,7 +224,8 @@ Which should result in:
 
 ## Contribute
 
-Make sure [PHPUnit](http://book.cakephp.org/3.0/en/development/testing.html#running-tests)
-and [CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer)
-tests pass before submitting a PR.
+Before submitting a PR make sure:
 
+- [PHPUnit](http://book.cakephp.org/3.0/en/development/testing.html#running-tests)
+and [CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer) tests pass
+- [Coveralls Code Coverage ](https://coveralls.io/github/alt3/cakephp-swagger) remains at 100%

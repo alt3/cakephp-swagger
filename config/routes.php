@@ -5,10 +5,10 @@ use Cake\Routing\Router;
 /**
  * Load app-specific configuration file
  */
-$configFile = 'swagger';
-$configPath = CONFIG . $configFile . '.php';
+$config = 'swagger';
+$configPath = CONFIG . $config . '.php';
 if (file_exists($configPath)) {
-    Configure::load($configFile, 'default');
+    Configure::load($config, 'default');
 }
 
 /**

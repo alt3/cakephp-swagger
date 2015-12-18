@@ -11,24 +11,29 @@ class DocsController extends AppController
 {
 
     /**
+     * @var string Prepended to filesystem swagger json files
+     */
+    protected $filePrefix = 'cakephp_swagger_';
+
+    /**
      * Index action.
      *
      * @param string $id Name of swagger document to generate/serve
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function index($id)
+    public function index($id = null)
     {
         if (!$id) {
-            throw new \InvalidArgumentException("Missing cakephp-swagger library argument");
+            throw new \InvalidArgumentException("Missing required argument holding Swagger document name");
         }
 
         if (!isset(static::$config['library'])) {
-            throw new \InvalidArgumentException("cakephp-swagger configuration misses library section");
+            throw new \InvalidArgumentException("Swagger configuration file does not contain a library section");
         }
 
         if (!array_key_exists($id, static::$config['library'])) {
-            throw new \InvalidArgumentException("cakephp-swagger configuration misses document definition for '$id'");
+            throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'");
         }
 
         $this->set('swaggerString', $this->getSwaggerDocument($id));
@@ -50,7 +55,7 @@ class DocsController extends AppController
         $filePath = CACHE . $this->filePrefix . $id . '.json';
         if (!static::$config['docs']['crawl']) {
             if (!file_exists($filePath)) {
-                throw new NotFoundException("Swagger file does not exist: $filePath");
+                throw new NotFoundException("Swagger json document was not found on filesystem: $filePath");
             }
             $fh = new File($filePath);
             return $fh->read();
@@ -87,7 +92,7 @@ class DocsController extends AppController
     {
         $fh = new File($path, true);
         if (!$fh->write($content)) {
-            throw new InternalErrorException('Error creating Swagger document on filesystem');
+            throw new InternalErrorException('Error writing Swagger json document to filesystem');
         }
         return true;
     }

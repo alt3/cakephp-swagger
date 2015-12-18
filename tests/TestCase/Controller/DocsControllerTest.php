@@ -37,9 +37,9 @@ class DocsControllerTest extends TestCase
      * Make sure calling docs page without :id parameter throws an exception.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing cakephp-swagger library argument
+     * @expectedExceptionMessage Missing required argument holding Swagger document name
      **/
-    public function testMethodIndexMissing()
+    public function testMethodIndexMissingArgument()
     {
         $controller = new DocsController();
         $reflection = $this->getIndexReflection($controller);
@@ -50,7 +50,7 @@ class DocsControllerTest extends TestCase
      * Make sure missing library section in configuration file throws an exception.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage cakephp-swagger configuration misses library section
+     * @expectedExceptionMessage Swagger configuration file does not contain a library section
      **/
     public function testMethodIndexMissingLibrarySection()
     {
@@ -63,7 +63,7 @@ class DocsControllerTest extends TestCase
      * Make sure missing document definition in configuration file throws an exception.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage cakephp-swagger configuration misses document definition for 'non-existing-document'
+     * @expectedExceptionMessageRegExp #Swagger configuration file does not contain a document definition for *#
      **/
     public function testMethodIndexMissingDocumentSection()
     {
@@ -123,7 +123,7 @@ class DocsControllerTest extends TestCase
      * written to the filesystem.
      *
      * @expectedException \Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Error creating Swagger document on filesystem
+     * @expectedExceptionMessage Error writing Swagger json document to filesystem
      **/
     public function testMethodWriteSwaggerDocumentToFileFail()
     {
@@ -137,7 +137,7 @@ class DocsControllerTest extends TestCase
      * throws an exception in non-development mode.
      *
      * @expectedException \Cake\Network\Exception\NotFoundException
-     * @expectedExceptionMessageRegExp #Swagger file does not exist: *#
+     * @expectedExceptionMessageRegExp #Swagger json document was not found on filesystem: *#
      **/
     public function testMethodGetSwaggerDocumentFromFileFail()
     {
