@@ -2,8 +2,9 @@
 
 [![Build Status](https://img.shields.io/travis/alt3/cakephp-swagger/master.svg?style=flat-square)](https://travis-ci.org/alt3/cakephp-swagger)
 [![Coverage](https://img.shields.io/coveralls/alt3/cakephp-swagger/master.svg?style=flat-square)](https://coveralls.io/r/alt3/cakephp-swagger)
+[![StyleCI Status](https://styleci.io/repos/45741948/shield)](https://styleci.io/repos/45741948)
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
 CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your projects using swagger-php and swagger-ui.
 
