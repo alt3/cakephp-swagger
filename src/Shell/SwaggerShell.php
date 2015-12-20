@@ -35,7 +35,7 @@ class SwaggerShell extends Shell
      * Generate fresh filesystem documents for all entries found in the library.
      *
      * @param string $host Hostname of system serving swagger documents (without protocol)
-     * @return bool true if successful
+     * @return void
      */
     public function makedocs($host)
     {
@@ -48,6 +48,5 @@ class SwaggerShell extends Shell
         $this->out('Crawl-generating swagger documents...');
         SwaggerTools::makeDocs($host);
         $this->out('Command completed successfully.');
-        return true;
     }
 }

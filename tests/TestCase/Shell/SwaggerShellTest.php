@@ -55,7 +55,7 @@ class SwaggerShellTest extends TestCase
     {
         $reflection = self::getReflection($this->shell);
         $result = $reflection->methods->makedocs->invokeArgs($this->shell, ['www.test.api']);
-        $this->assertTrue($result);
+        $this->assertSame(null, $result);
     }
 
     /**
