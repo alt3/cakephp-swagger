@@ -183,7 +183,6 @@ EOF;
         $this->assertNotSame($result->paths[0]->path, '/taxis'); // In ExcludeController so should not be present
     }
 
-
     /**
      * Make sure an exception is thrown when swagger document cannot be
      * written to the filesystem.
@@ -296,7 +295,6 @@ EOF;
     {
         $obj = new stdClass();
         $obj->class = new \ReflectionClass(get_class($object));
-
 
         // make all methods accessible
         $obj->methods = new stdClass();

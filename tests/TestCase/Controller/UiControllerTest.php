@@ -77,7 +77,6 @@ class UiControllerTest extends TestCase
         $obj = new stdClass();
         $obj->class = new \ReflectionClass(get_class($object));
 
-
         // make all methods accessible
         $obj->methods = new stdClass();
         $classMethods = $obj->class->getMethods();
