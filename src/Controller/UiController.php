@@ -16,7 +16,7 @@ class UiController extends AppController
     public function index()
     {
         $this->viewBuilder()->layout(false);
-        $this->set('uiConfig', static::$config['ui']);
+        $this->set('uiConfig', $this->config['ui']);
         $this->set('url', $this->getDefaultDocumentUrl());
     }
 
@@ -26,12 +26,12 @@ class UiController extends AppController
     public function getDefaultDocumentUrl()
     {
         // Use Swagger petstore if library contains no entries
-        if (empty(static::$config['library'])) {
+        if (empty($this->config['library'])) {
             return 'http://petstore.swagger.io/v2/swagger.json';
         }
 
         // Otherwise generate URL using first document in the library
-        $defaultDocument = key(static::$config['library']);
+        $defaultDocument = key($this->config['library']);
 
         return Router::url([
             'plugin' => 'Alt3/Swagger',

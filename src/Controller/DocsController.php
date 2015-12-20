@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Routing\Router;
 
 class DocsController extends AppController
 {
@@ -16,7 +17,17 @@ class DocsController extends AppController
     protected $filePrefix = 'cakephp_swagger_';
 
     /**
-     * Index action.
+     * @var array Default CakePHP API success response structure.
+     */
+    public static $apiResponseBody = [
+        'success' => true,
+        'data' => []
+    ];
+
+    /**
+     * Index action used to produce a JSON response containing either a swagger
+     * document (if a valid id argument is passed) or a list with links to all
+     * aavailable documents (if defined in the library).
      *
      * @param string $id Name of swagger document to generate/serve
      * @throws \InvalidArgumentException
@@ -25,21 +36,49 @@ class DocsController extends AppController
     public function index($id = null)
     {
         if (!$id) {
-            throw new \InvalidArgumentException('Missing required argument holding Swagger document name');
+            $this->jsonResponse($this->getJsonDocumentList());
+            return;
         }
 
-        if (!isset(static::$config['library'])) {
+        if (!isset($this->config['library'])) {
             throw new \InvalidArgumentException('Swagger configuration file does not contain a library section');
         }
 
-        if (!array_key_exists($id, static::$config['library'])) {
+        if (!array_key_exists($id, $this->config['library'])) {
             throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'");
         }
 
-        $this->set('swaggerString', $this->getSwaggerDocument($id));
-        $this->viewBuilder()->layout(false);
-        $this->addCorsHeaders();
-        $this->response->type('json');
+        $this->jsonResponse($this->getSwaggerDocument($id));
+    }
+
+    /**
+     * Creates a json string containing fullBase links to all documents in the
+     * library (useful for e.g. displaying on the /docs index action).
+     *
+     * @return string
+     */
+    protected function getJsonDocumentList()
+    {
+        if (!isset($this->config['library'])) {
+            return json_encode(static::$apiResponseBody, JSON_PRETTY_PRINT);
+        }
+
+        if (!count($this->config['library'])) {
+            return json_encode(static::$apiResponseBody, JSON_PRETTY_PRINT);
+        }
+
+        foreach (array_keys($this->config['library']) as $document) {
+            static::$apiResponseBody['data'][] = [
+                'document' => $document,
+                'link' => Router::url([
+                    'plugin' => 'Alt3/Swagger',
+                    'controller' => 'Docs',
+                    'action' => 'index',
+                    $document
+                ], true)
+            ];
+        }
+        return json_encode(static::$apiResponseBody, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES);
     }
 
     /**
@@ -53,7 +92,7 @@ class DocsController extends AppController
     {
         // load document from filesystem
         $filePath = CACHE . $this->filePrefix . $id . '.json';
-        if (!static::$config['docs']['crawl']) {
+        if (!$this->config['docs']['crawl']) {
             if (!file_exists($filePath)) {
                 throw new NotFoundException("Swagger json document was not found on filesystem: $filePath");
             }
@@ -64,14 +103,14 @@ class DocsController extends AppController
 
         // otherwise crawl-generate a fresh document
         $swaggerOptions = null;
-        if (isset(static::$config['library'][$id]['exclude'])) {
+        if (isset($this->config['library'][$id]['exclude'])) {
             $swaggerOptions = [
-                'exclude' => static::$config['library'][$id]['exclude']
+                'exclude' => $this->config['library'][$id]['exclude']
             ];
         }
-        $swagger = \Swagger\scan(static::$config['library'][$id]['include'], $swaggerOptions);
+        $swagger = \Swagger\scan($this->config['library'][$id]['include'], $swaggerOptions);
 
-        // set properties required by UI to generate the BASE URL
+        // set object properties required by UI to generate the BASE URL
         $swagger->host = $this->request->host();
         $swagger->basePath = '/' . Configure::read('App.base');
         $swagger->schemes = Configure::read('Swagger.ui.schemes');
@@ -108,16 +147,30 @@ class DocsController extends AppController
     protected function addCorsHeaders()
     {
         // set CORS headers if specified in config
-        if (!isset(static::$config['docs']['cors'])) {
+        if (!isset($this->config['docs']['cors'])) {
             return false;
         }
 
-        if (!count(static::$config['docs']['cors'])) {
+        if (!count($this->config['docs']['cors'])) {
             return false;
         }
 
-        foreach (static::$config['docs']['cors'] as $header => $value) {
+        foreach ($this->config['docs']['cors'] as $header => $value) {
             $this->response->header($header, $value);
         }
+    }
+
+    /**
+     * Configures the json response before calling the index view.
+     *
+     * @param string $json JSON encoded string
+     * @return void
+     */
+    protected function jsonResponse($json)
+    {
+        $this->set('json', $json);
+        $this->viewBuilder()->layout(false);
+        $this->addCorsHeaders();
+        $this->response->type('json');
     }
 }

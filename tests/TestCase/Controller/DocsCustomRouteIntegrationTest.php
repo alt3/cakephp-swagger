@@ -3,7 +3,7 @@ namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Cake\TestSuite\IntegrationTestCase;
 
-class UiControllerCustomDocsRouteTest extends IntegrationTestCase
+class DocsCustomRouteIntegrationTest extends IntegrationTestCase
 {
 
     /**
