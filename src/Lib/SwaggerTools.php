@@ -81,7 +81,7 @@ class SwaggerTools
      * @throws \InvalidArgumentException
      * @return bool true if successful, false on all errors
      */
-    public function makeDocs($host)
+    public static function makeDocs($host)
     {
         if (!Configure::read('Swagger.library')) {
             throw new \InvalidArgumentException('Swagger configuration file does not contain a library section');
