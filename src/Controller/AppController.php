@@ -11,7 +11,8 @@ class AppController extends BaseController
     /**
      * @var array that will hold merged configuration settings.
      */
-    public static $config;
+    public $config;
+
     /**
      * @var array holding required default configuration settings.
      */
@@ -34,7 +35,7 @@ class AppController extends BaseController
         parent::initialize();
 
         if (Configure::read('Swagger')) {
-            static::$config = Hash::merge(static::$defaultConfig, Configure::read('Swagger'));
+            $this->config = Hash::merge(static::$defaultConfig, Configure::read('Swagger'));
         }
     }
 }

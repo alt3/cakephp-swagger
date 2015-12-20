@@ -1,3 +1,3 @@
 <?php
 
-echo $swaggerString;
+echo $json;

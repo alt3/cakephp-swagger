@@ -9,16 +9,39 @@ use StdClass;
 
 class DocsControllerTest extends TestCase
 {
+    /**
+     * @var \Alt3\Swagger\Controller\DocsController
+     */
+    protected $controller;
 
     /**
-     * @var array holding default configuration as found in AppController.
+     * @var array Default AppController settings every test will start with.
      */
-    protected $defaultConfig = [
-        'noCache' => true,
+    protected static $defaultConfig = [
+        'docs' => [
+            'crawl' => true
+        ],
         'ui' => [
             'title' => 'cakephp-swagger'
         ]
     ];
+
+    /**
+     * @var array Default CakePHP API success response structure.
+     */
+    protected static $apiResponseBody = [
+        'success' => true,
+        'data' => []
+    ];
+
+    /**
+     * setUp method executed before every testMethod.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->controller = new DocsController();
+    }
 
     /**
      * tearDown method executed after every testMethod.
@@ -33,75 +56,117 @@ class DocsControllerTest extends TestCase
     }
 
     /**
-     * Make sure calling docs page without :id parameter throws an exception.
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing required argument holding Swagger document name
-     **/
-    public function testMethodIndexMissingArgument()
+     * Make sure our tests are using the expected configuration settings.
+     */
+    public function testDefaultSettings()
     {
-        $controller = new DocsController();
-        $reflection = $this->getIndexReflection($controller);
-        $reflection->method->invokeArgs($controller, [null]);
+        $this->assertSame(self::$defaultConfig, DocsController::$defaultConfig);
+        $this->assertSame(self::$apiResponseBody, DocsController::$apiResponseBody);
     }
 
     /**
-     * Make sure missing library section in configuration file throws an exception.
+     * Make sure the function responsible for generating the json list with
+     * documents (index action, no argument) returns the expected json.
+     */
+    public function testMethodGetJsonDocumentList()
+    {
+        $reflection = self::getReflection($this->controller);
+
+        // no library should return empty json success response
+        $result = $reflection->methods->getJsonDocumentList->invokeArgs($this->controller, []);
+        $expected = json_encode(self::$apiResponseBody, JSON_PRETTY_PRINT);
+        $this->assertSame($expected, $result);
+
+        // no documents in library should return empty json success response
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
+            'library' => []
+        ]));
+        $result = $reflection->methods->getJsonDocumentList->invokeArgs($this->controller, []);
+        $expected = json_encode(self::$apiResponseBody, JSON_PRETTY_PRINT);
+        $this->assertSame($expected, $result);
+
+        // filled library should return json data body with links
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
+            'library' => [
+                'testdoc1' => [],
+                'testdoc2' => []
+            ]
+        ]));
+
+        $expected = <<<EOF
+{
+    "success": true,
+    "data": [
+        {
+            "document": "testdoc1",
+            "link": "http://localhost/alt3/swagger/docs/testdoc1"
+        },
+        {
+            "document": "testdoc2",
+            "link": "http://localhost/alt3/swagger/docs/testdoc2"
+        }
+    ]
+}
+EOF;
+        $result = $reflection->methods->getJsonDocumentList->invokeArgs($this->controller, []);
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * Make sure missing that a missing library section in the configuration
+     * file will throw an exception when a document is being requested.
      *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Swagger configuration file does not contain a library section
-     **/
-    public function testMethodIndexMissingLibrarySection()
+     */
+    public function testMissingLibrarySection()
     {
-        $controller = new DocsController();
-        $reflection = $this->getIndexReflection($controller);
-        $reflection->method->invokeArgs($controller, ['api']);
+        $reflection = self::getReflection($this->controller);
+        $reflection->methods->index->invokeArgs($this->controller, ['testdoc']);
     }
 
     /**
-     * Make sure missing document definition in configuration file throws an exception.
+     * Make sure that an empty library in the configuration file will throw
+     * an exception when a document is being requested.
      *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp #Swagger configuration file does not contain a document definition for *#
-     **/
-    public function testMethodIndexMissingDocumentSection()
+     */
+    public function testEmptyLibrary()
     {
-        $controller = new DocsController();
-        $reflection = $this->getIndexReflection($controller);
-        $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
+        $reflection = self::getReflection($this->controller);
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'library' => []
         ]));
-        $reflection->method->invokeArgs($controller, ['non-existing-document']);
+        $reflection->methods->index->invokeArgs($this->controller, ['testdoc']);
     }
 
     /**
      * Make sure swagger documents can be crawl-generated successfully.
      *
      * @return void
-     **/
-    public function testMethodGetSwaggerDocumentRealtimeSuccess()
+     */
+    public function testMethodGetSwaggerDocumentCrawlSuccess()
     {
-        $controller = new DocsController();
-        $reflection = $reflection = $this->getReflection($controller, 'getSwaggerDocument', 'config');
-        $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
+        $reflection = self::getReflection($this->controller);
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
                 'crawl' => true
             ],
             'library' => [
                 'testdoc' => [
-                     'include' => APP . 'src', // all files in dir
+                    'include' => APP . 'src', // all files in dir
                 ]
             ]
         ]));
 
         // make sure all files are being crawled
-        $result = $reflection->method->invokeArgs($controller, ['testdoc']);
-        $this->assertTextEquals($result->info->description, 'cakephp-swagger test document'); // IncludeController
-        $this->assertTextEquals($result->paths[0]->path, '/taxis'); // ExcludeController
+        $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
+        $this->assertSame($result->info->description, 'cakephp-swagger test document'); // IncludeController
+        $this->assertSame($result->paths[0]->path, '/taxis'); // ExcludeController
 
         // make sure exclusions are actually being excluded from crawling.
-        $config = $reflection->property->getValue($controller);
-        $reflection->property->setValue($controller, array_merge($config, [
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
                 'crawl' => true
             ],
@@ -112,10 +177,12 @@ class DocsControllerTest extends TestCase
                 ]
             ]
         ]));
-        $result = $reflection->method->invokeArgs($controller, ['testdoc']);
-        $this->assertTextEquals($result->info->description, 'cakephp-swagger test document'); // IncludeController
-        $this->assertTextNotEquals($result->paths[0]->path, '/taxis'); // In ExcludeController so should not be present
+
+        $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
+        $this->assertSame($result->info->description, 'cakephp-swagger test document'); // IncludeController
+        $this->assertNotSame($result->paths[0]->path, '/taxis'); // In ExcludeController so should not be present
     }
+
 
     /**
      * Make sure an exception is thrown when swagger document cannot be
@@ -123,12 +190,11 @@ class DocsControllerTest extends TestCase
      *
      * @expectedException \Cake\Network\Exception\InternalErrorException
      * @expectedExceptionMessage Error writing Swagger json document to filesystem
-     **/
+     */
     public function testMethodWriteSwaggerDocumentToFileFail()
     {
-        $controller = new DocsController();
-        $reflection = $reflection = $this->getReflection($controller, 'writeSwaggerDocumentToFile');
-        $reflection->method->invokeArgs($controller, ['////failing-doc-path', 'dummy-file-content']);
+        $reflection = self::getReflection($this->controller);
+        $reflection->methods->writeSwaggerDocumentToFile->invokeArgs($this->controller, ['////failing-doc-path', 'dummy-file-content']);
     }
 
     /**
@@ -137,38 +203,35 @@ class DocsControllerTest extends TestCase
      *
      * @expectedException \Cake\Network\Exception\NotFoundException
      * @expectedExceptionMessageRegExp #Swagger json document was not found on filesystem: *#
-     **/
+     */
     public function testMethodGetSwaggerDocumentFromFileFail()
     {
-        $controller = new DocsController();
-        $reflection = $this->getIndexReflection($controller);
-        $randomDocument = rand(0, 10000000);
-        $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
+        $reflection = self::getReflection($this->controller);
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
                 'crawl' => false // force loading doc from filesystem
             ],
             'library' => [
-                $randomDocument => []
+                'nonexisting' => []
             ]
         ]));
-        $reflection->method->invokeArgs($controller, [$randomDocument]);
+        $reflection->methods->index->invokeArgs($this->controller, ['nonexisting']);
     }
 
     /**
      * Make sure swagger documents are successfully served from filesystem.
      *
      * @return void
-     **/
+     */
     public function testMethodGetSwaggerDocumentFromFileSuccess()
     {
         // make sure test file does not exist
         $filePath = CACHE . 'cakephp_swagger_testdoc.json';
         $this->assertFileNotExists($filePath);
 
-        // crawl-generate fresh json file
-        $controller = new DocsController();
-        $reflection = $reflection = $this->getReflection($controller, 'getSwaggerDocument', 'config');
-        $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
+        // successfully crawl-generate a fresh json file
+        $reflection = self::getReflection($this->controller);
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
                 'crawl' => true
             ],
@@ -178,12 +241,13 @@ class DocsControllerTest extends TestCase
                 ]
             ]
         ]));
-        $result = $reflection->method->invokeArgs($controller, ['testdoc']);
-        $this->assertFileExists($filePath);
-        $this->assertTextEquals($result->info->description, 'cakephp-swagger test document');
 
-        // file is present now so it should be loaded from the filesystem
-        $reflection->property->setValue($controller, array_merge($reflection->property->getValue($controller), [
+        $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
+        $this->assertFileExists($filePath);
+        $this->assertSame($result->info->description, 'cakephp-swagger test document');
+
+        // generated file should load from from filesystem when disabling crawl
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
                 'crawl' => false
             ],
@@ -193,10 +257,11 @@ class DocsControllerTest extends TestCase
                 ]
             ]
         ]));
-        $reflection->method->invokeArgs($controller, ['testdoc']);
+
+        $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
         $fh = new File($filePath);
         $fileContent = $fh->read();
-        $this->assertContains('cakephp-swagger test document', $fileContent); // Annotation from IncludeController
+        $this->assertContains('cakephp-swagger test document', $fileContent); // Annotation found in IncludeController
     }
 
     /**
@@ -204,60 +269,52 @@ class DocsControllerTest extends TestCase
      * file will not trigger adding headers to the json response.
      *
      * @return void
-     **/
+     */
     public function testAddingCorsHeaders()
     {
-        $controller = new DocsController();
-        $reflection = $reflection = $this->getReflection($controller, 'addCorsHeaders', 'config');
-        $reflection->property->setValue($controller, $this->defaultConfig);
+        $reflection = self::getReflection($this->controller);
 
-        $result = $reflection->method->invokeArgs($controller, []);
+        // cors headers not in configuration
+        $result = $reflection->methods->addCorsHeaders->invokeArgs($this->controller, []);
         $this->assertFalse($result);
 
-        // CORS array present in configuration but empty
-        $config = $reflection->property->getValue($controller);
-        $reflection->property->setValue($controller, array_merge($config, [
+        // cors headers section in configuration but no entries
+        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
                 'cors' => []
             ]
         ]));
-        $result = $reflection->method->invokeArgs($controller, []);
+        $result = $reflection->methods->addCorsHeaders->invokeArgs($this->controller, []);
         $this->assertFalse($result);
     }
 
     /**
-     * Convenience function to return an object with reflection class, accessible
-     * protected method and optional accessible protected property.
+     * Convenience function to return an object with reflection class,
+     * accessible protected methods and accessible protected properties.
      */
-    public function getReflection($object, $method = false, $property = false)
+    protected static function getReflection($object)
     {
         $obj = new stdClass();
         $obj->class = new \ReflectionClass(get_class($object));
-        $obj->method = null;
-        if ($method) {
-            $obj->method = $obj->class->getMethod($method);
-            $obj->method->setAccessible(true);
-        }
-        if ($property) {
-            $obj->property = $obj->class->getProperty($property);
-            $obj->property->setAccessible(true);
+
+
+        // make all methods accessible
+        $obj->methods = new stdClass();
+        $classMethods = $obj->class->getMethods();
+        foreach ($classMethods as $method) {
+            $methodName = $method->name;
+            $obj->methods->{$methodName} = $obj->class->getMethod($methodName);
+            $obj->methods->{$methodName}->setAccessible(true);
         }
 
+        // make all properties accessible
+        $obj->properties = new stdClass();
+        $classProperties = $obj->class->getProperties();
+        foreach ($classProperties as $property) {
+            $propertyName = $property->name;
+            $obj->properties->{$propertyName} = $obj->class->getProperty($propertyName);
+            $obj->properties->{$propertyName}->setAccessible(true);
+        }
         return $obj;
-    }
-
-    /**
-     * Shortcut function to return most used reflection in these tests with
-     * default settings.
-     *
-     * @return
-     */
-    public function getIndexReflection($controller)
-    {
-        $controller = new DocsController();
-        $reflection = $reflection = $this->getReflection($controller, 'index', 'config');
-        $reflection->property->setValue($controller, $this->defaultConfig);
-
-        return $reflection;
     }
 }

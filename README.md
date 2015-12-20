@@ -84,14 +84,16 @@ return [
 
 ### UI section
 
-Use the `ui` section to customize the following options:
+Use the `ui` section to customize the following Swagger-UI options:
 
 - `title`: sets the Swagger-UI page title, defaults to `cakephp-swagger`
 - `validator`: show/hide the validator image, defaults to `true`
 - `route`: expose the UI using a custom route, defaults to `/alt3/swagger/`
 - `schemes`: array used to specify third field
-[used by the UI to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
+[used to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
 (`host` and `basePath` are fetched realtime), defaults to `null`
+
+> Please note that the UI will auto-load the first document found in the library.
 
 ### Docs section
 
@@ -111,6 +113,13 @@ Use the `library` section to specify one or multiple swagger documents so:
 - this plugin can expose the json at `http://your.app/alt3/swagger/docs/:id`
 (so it can be used by the UI)
 
+The following library example would result in:
+
+- swagger-php scanning all files and folders defined in `include`
+- swagger-php ignoring all files and folders defined in `exclude`
+- two endpoints serving json swagger documents:
+    - `http://your.app/alt3/swagger/docs/api`
+    - `http://your.app/alt3/swagger/docs/editor`
 
 ```php
 'library' => [
@@ -130,16 +139,25 @@ Use the `library` section to specify one or multiple swagger documents so:
 ]
 ```
 
-The above library will result in:
+It would also make `http://your.app/alt3/swagger/docs` produce a json list
+with links to all available documents similar to the example below.
 
-- swagger-php scanning all files and folders defined in `include`
-- swagger-php ignoring all files and folders defined in `exclude`
-- two document endpoints serving json at:
-    - `http://your.app/alt3/swagger/docs/api`
-    - `http://your.app/alt3/swagger/docs/editor`
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "document": "api",
+            "link": "http://your.app/alt3/swagger/docs/api"
+        },
+        {
+            "document": "editor",
+            "link": "http://your.app/alt3/swagger/docs/editor"
+        }
+    ]
+}
+```
 
-> **Note**: the UI will auto-load the first document found in the library
-> section.
 
 ## Quickstart Annotation Example
 
@@ -221,7 +239,7 @@ Which should result in:
 
 - [The Swagger Specification](https://github.com/swagger-api/swagger-spec)
 - [PHP Annotation Examples](https://github.com/zircote/swagger-php/tree/master/Examples)
-
+- [Swagger Document Checklist](http://apievangelist.com/2015/06/15/my-minimum-viable-definition-for-a-complete-swagger-api-definition/)
 
 ## Contribute
 
