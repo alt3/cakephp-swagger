@@ -45,7 +45,6 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
      **/
     public function testCustomRouteSuccess()
     {
-        // default route
         $this->get('/custom-docs-route/testdoc');
         $this->assertResponseOk();
         $this->assertContentType('application/json');
@@ -59,7 +58,6 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
      */
     public function testDefaultRouteFail()
     {
-        // default route should no longer function
         $this->get('/alt3/swagger/docs');
         $this->assertResponseError();
         $this->assertResponseContains('Error: Missing Route');

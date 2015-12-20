@@ -110,6 +110,10 @@ class DocsControllerTest extends TestCase
 EOF;
         $result = $reflection->methods->getJsonDocumentList->invokeArgs($this->controller, []);
         $this->assertSame($expected, $result);
+
+        // index action should return null when no document id is passed
+        $result = $reflection->methods->index->invokeArgs($this->controller, []);
+        $this->assertSame(null, $result);
     }
 
     /**
@@ -139,128 +143,6 @@ EOF;
             'library' => []
         ]));
         $reflection->methods->index->invokeArgs($this->controller, ['testdoc']);
-    }
-
-    /**
-     * Make sure swagger documents can be crawl-generated successfully.
-     *
-     * @return void
-     */
-    public function testMethodGetSwaggerDocumentCrawlSuccess()
-    {
-        $reflection = self::getReflection($this->controller);
-        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'docs' => [
-                'crawl' => true
-            ],
-            'library' => [
-                'testdoc' => [
-                    'include' => APP . 'src', // all files in dir
-                ]
-            ]
-        ]));
-
-        // make sure all files are being crawled
-        $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
-        $this->assertSame($result->info->description, 'cakephp-swagger test document'); // IncludeController
-        $this->assertSame($result->paths[0]->path, '/taxis'); // ExcludeController
-
-        // make sure exclusions are actually being excluded from crawling.
-        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'docs' => [
-                'crawl' => true
-            ],
-            'library' => [
-                'testdoc' => [
-                    'include' => APP . 'src',
-                    'exclude' => APP . 'src' . DS . 'Controller' . DS . 'DummyExcludeController'
-                ]
-            ]
-        ]));
-
-        $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
-        $this->assertSame($result->info->description, 'cakephp-swagger test document'); // IncludeController
-        $this->assertNotSame($result->paths[0]->path, '/taxis'); // In ExcludeController so should not be present
-    }
-
-    /**
-     * Make sure an exception is thrown when swagger document cannot be
-     * written to the filesystem.
-     *
-     * @expectedException \Cake\Network\Exception\InternalErrorException
-     * @expectedExceptionMessage Error writing Swagger json document to filesystem
-     */
-    public function testMethodWriteSwaggerDocumentToFileFail()
-    {
-        $reflection = self::getReflection($this->controller);
-        $reflection->methods->writeSwaggerDocumentToFile->invokeArgs($this->controller, ['////failing-doc-path', 'dummy-file-content']);
-    }
-
-    /**
-     * Make sure requesting a document that does not exist on the filesystem
-     * throws an exception in non-development mode.
-     *
-     * @expectedException \Cake\Network\Exception\NotFoundException
-     * @expectedExceptionMessageRegExp #Swagger json document was not found on filesystem: *#
-     */
-    public function testMethodGetSwaggerDocumentFromFileFail()
-    {
-        $reflection = self::getReflection($this->controller);
-        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'docs' => [
-                'crawl' => false // force loading doc from filesystem
-            ],
-            'library' => [
-                'nonexisting' => []
-            ]
-        ]));
-        $reflection->methods->index->invokeArgs($this->controller, ['nonexisting']);
-    }
-
-    /**
-     * Make sure swagger documents are successfully served from filesystem.
-     *
-     * @return void
-     */
-    public function testMethodGetSwaggerDocumentFromFileSuccess()
-    {
-        // make sure test file does not exist
-        $filePath = CACHE . 'cakephp_swagger_testdoc.json';
-        $this->assertFileNotExists($filePath);
-
-        // successfully crawl-generate a fresh json file
-        $reflection = self::getReflection($this->controller);
-        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'docs' => [
-                'crawl' => true
-            ],
-            'library' => [
-                'testdoc' => [
-                    'include' => APP . 'src', // all files in dir
-                ]
-            ]
-        ]));
-
-        $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
-        $this->assertFileExists($filePath);
-        $this->assertSame($result->info->description, 'cakephp-swagger test document');
-
-        // generated file should load from from filesystem when disabling crawl
-        $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'docs' => [
-                'crawl' => false
-            ],
-            'library' => [
-                'testdoc' => [
-                    'include' => APP . 'src', // crawl all files in this directory
-                ]
-            ]
-        ]));
-
-        $reflection->methods->getSwaggerDocument->invokeArgs($this->controller, ['testdoc']);
-        $fh = new File($filePath);
-        $fileContent = $fh->read();
-        $this->assertContains('cakephp-swagger test document', $fileContent); // Annotation found in IncludeController
     }
 
     /**

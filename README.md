@@ -158,6 +158,18 @@ with links to all available documents similar to the example below.
 }
 ```
 
+## SwaggerShell
+
+This plugin comes with a shell that will create `cakephp_swagger` prefixed
+filesystem documents in `tmp/cache` for all entities defined in your library.
+
+
+```bash
+bin/cake swagger makedocs <your.hostname.com>
+```
+
+> Note: the hostname wil be inserted into your swagger document's `host` property.
+
 
 ## Quickstart Annotation Example
 
