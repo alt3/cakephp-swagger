@@ -160,16 +160,17 @@ with links to all available documents similar to the example below.
 
 ## SwaggerShell
 
-This plugin comes with a shell that will create `cakephp_swagger` prefixed
-filesystem documents in `tmp/cache` for all entities defined in your library.
-
+This plugin comes with a shell that should simplify deployment in production
+environments. Simply run the following command to create `cakephp_swagger`
+prefixed filesystem documents in `tmp/cache` for all entities found in your
+library.
 
 ```bash
-bin/cake swagger makedocs <your.hostname.com>
+bin/cake swagger makedocs <host>
 ```
 
-> Note: the hostname wil be inserted into your swagger document's `host` property.
-
+> The host argument (e.g. your.app.com) is required, should not include
+protocols and is used to set the `host` property inside your swagger documents.
 
 ## Quickstart Annotation Example
 
