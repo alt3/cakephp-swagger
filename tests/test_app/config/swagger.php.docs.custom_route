@@ -7,6 +7,7 @@
 return [
     'Swagger' => [
         'docs' => [
+            'crawl' => true,
             'route' => '/custom-docs-route/',
             'cors' => [
                 'Access-Control-Allow-Origin' => '*',

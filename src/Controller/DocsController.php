@@ -1,20 +1,14 @@
 <?php
 namespace Alt3\Swagger\Controller;
 
+use Alt3\Swagger\Lib\SwaggerTools;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
 use Cake\Network\Exception\InternalErrorException;
-use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 
 class DocsController extends AppController
 {
-
-    /**
-     * @var string Prepended to filesystem swagger json files
-     */
-    protected $filePrefix = 'cakephp_swagger_';
 
     /**
      * @var array Default CakePHP API success response structure.
@@ -48,7 +42,8 @@ class DocsController extends AppController
             throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'");
         }
 
-        $this->jsonResponse($this->getSwaggerDocument($id));
+        $document = SwaggerTools::getSwaggerDocument($id, $this->request->host());
+        $this->jsonResponse($document);
     }
 
     /**
@@ -79,64 +74,6 @@ class DocsController extends AppController
             ];
         }
         return json_encode(static::$apiResponseBody, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES);
-    }
-
-    /**
-     * Returns a swagger document from filesystem or crawl-generates a fresh one.
-     *
-     * @param string $id Name of the document
-     * @throws \InvalidArgumentException
-     * @return string
-     */
-    protected function getSwaggerDocument($id)
-    {
-        // load document from filesystem
-        $filePath = CACHE . $this->filePrefix . $id . '.json';
-        if (!$this->config['docs']['crawl']) {
-            if (!file_exists($filePath)) {
-                throw new NotFoundException("Swagger json document was not found on filesystem: $filePath");
-            }
-            $fh = new File($filePath);
-
-            return $fh->read();
-        }
-
-        // otherwise crawl-generate a fresh document
-        $swaggerOptions = null;
-        if (isset($this->config['library'][$id]['exclude'])) {
-            $swaggerOptions = [
-                'exclude' => $this->config['library'][$id]['exclude']
-            ];
-        }
-        $swagger = \Swagger\scan($this->config['library'][$id]['include'], $swaggerOptions);
-
-        // set object properties required by UI to generate the BASE URL
-        $swagger->host = $this->request->host();
-        $swagger->basePath = '/' . Configure::read('App.base');
-        $swagger->schemes = Configure::read('Swagger.ui.schemes');
-
-        // write document to filesystem
-        $this->writeSwaggerDocumentToFile($filePath, $swagger);
-
-        return $swagger;
-    }
-
-    /**
-     * Write swagger document to filesystem.
-     *
-     * @param string $path Full path to the json document including filename
-     * @param string $content Swagger content
-     * @throws Cake\Network\Exception\InternalErrorException
-     * @return bool
-     */
-    protected function writeSwaggerDocumentToFile($path, $content)
-    {
-        $fh = new File($path, true);
-        if (!$fh->write($content)) {
-            throw new InternalErrorException('Error writing Swagger json document to filesystem');
-        }
-
-        return true;
     }
 
     /**
