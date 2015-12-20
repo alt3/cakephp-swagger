@@ -5,7 +5,6 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\NotFoundException;
-use Cake\Routing\Router;
 
 class SwaggerTools
 {

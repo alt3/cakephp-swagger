@@ -4,7 +4,6 @@ namespace Alt3\Swagger\Shell;
 use Alt3\Swagger\Controller\AppController;
 use Alt3\Swagger\Lib\SwaggerTools;
 use Cake\Console\Shell;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 

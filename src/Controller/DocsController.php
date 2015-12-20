@@ -2,9 +2,6 @@
 namespace Alt3\Swagger\Controller;
 
 use Alt3\Swagger\Lib\SwaggerTools;
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Routing\Router;
 
 class DocsController extends AppController

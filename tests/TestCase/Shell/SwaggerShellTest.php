@@ -14,7 +14,7 @@ class SwaggerShellTest extends TestCase
     protected $shell;
 
     /**
-     * setUp method
+     * setUp method.
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class SwaggerShellTest extends TestCase
     }
 
     /**
-     * tearDown method
+     * tearDown method.
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class SwaggerShellTest extends TestCase
     }
 
     /**
-     * Test the makedocs command
+     * Test the makedocs command.
      *
      * @return bool
      */
