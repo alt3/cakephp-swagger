@@ -93,7 +93,7 @@ class DocsControllerTest extends TestCase
             ]
         ]));
 
-        $expected = <<<EOF
+        $expected = <<<'EOF'
 {
     "success": true,
     "data": [
