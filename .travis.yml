@@ -20,7 +20,7 @@ matrix:
       env: PHPCS=1 PHPUNIT=0
 
     - php: 7.0
-      env: CODECOVEAGE=1 PHPUNIT=0
+      env: CODECOVERAGE=1 PHPUNIT=0
 
     - php: hhvm
       env: HHVM=1
