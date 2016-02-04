@@ -19,8 +19,8 @@ matrix:
     - php: 5.4
       env: PHPCS=1 PHPUNIT=0
 
-    - php: 5.4
-      env: COVERALLS=1 PHPUNIT=0
+    - php: 7.0
+      env: CODECOVEAGE=1 PHPUNIT=0
 
     - php: hhvm
       env: HHVM=1
@@ -34,9 +34,6 @@ before_script:
 
   - sh -c "if [ '$PHPCS' = '1' ]; then composer require cakephp/cakephp-codesniffer:dev-master; fi"
 
-  - sh -c "if [ '$COVERALLS' = '1' ]; then composer require --dev satooshi/php-coveralls:dev-master; fi"
-  - sh -c "if [ '$COVERALLS' = '1' ]; then mkdir -p build/logs; fi"
-
   - sh -c "if [ '$HHVM' != '1' ]; then echo 'extension = memcached.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi"
   - sh -c "if [ '$HHVM' = '1' ]; then composer require lorenzo/multiple-iterator=~1.0; fi"
 
@@ -49,8 +46,9 @@ script:
 
   - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests ./config --ignore=.webroot; fi"
 
-  - sh -c "if [ '$COVERALLS' = '1' ]; then phpunit --stderr --coverage-clover build/logs/clover.xml; fi"
-  - sh -c "if [ '$COVERALLS' = '1' ]; then php vendor/bin/coveralls -c .coveralls.yml -v; fi"
+  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then phpunit --coverage-clover=clover.xml || true; fi"
+  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then wget -O codecov.sh https://codecov.io/bash; fi"
+  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then bash codecov.sh; fi"
 
 notifications:
   email: false

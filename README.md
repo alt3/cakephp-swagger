@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/alt3/cakephp-swagger/master.svg?style=flat-square)](https://travis-ci.org/alt3/cakephp-swagger)
 [![StyleCI Status](https://styleci.io/repos/45741948/shield)](https://styleci.io/repos/45741948)
-[![Coverage](https://img.shields.io/coveralls/alt3/cakephp-swagger/master.svg?style=flat-square)](https://coveralls.io/r/alt3/cakephp-swagger)
+[![Coverage Status](https://img.shields.io/codecov/c/github/alt3/cakephp-swagger.svg?style=flat-square)](https://codecov.io/github/alt3/cakephp-swagger)
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
