@@ -42,6 +42,7 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
 All configuration for this plugin is done through the `/config/swagger.php`
 configuration file. TLDR full example below.
 
+
 ```php
 <?php
 use Cake\Core\Configure;
