@@ -3,8 +3,8 @@
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\UrlHelper;
 
-if (empty($userConfig['title'])) {
-    $userConfig['title'] = "cakephp-swagger";
+if (empty($uiConfig['title'])) {
+    $uiConfig['title'] = "cakephp-swagger";
 }
 
 if (!isset($uiConfig['validator'])) {
@@ -16,7 +16,7 @@ if (!isset($uiConfig['validator'])) {
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?= $userConfig['title'] ?></title>
+    <title><?= $uiConfig['title'] ?></title>
     <?php
 
     // favicons
@@ -37,7 +37,7 @@ if (!isset($uiConfig['validator'])) {
     echo $this->Html->css([
         'Alt3/Swagger.typography.css',
         'Alt3/Swagger.reset.css',
-        'Alt3/Swagger.screen.css'
+        'Alt3/Swagger.screen.css',
     ], ['media' => 'screen', 'once' => false, 'fullBase' => true]);
 
     // print stylesheet
@@ -48,15 +48,18 @@ if (!isset($uiConfig['validator'])) {
 
     // javascript libraries
     echo $this->Html->script([
+		'Alt3/Swagger./lib/object-assign-pollyfill.js',
         'Alt3/Swagger./lib/jquery-1.8.0.min.js',
         'Alt3/Swagger./lib/jquery.slideto.min.js',
         'Alt3/Swagger./lib/jquery.wiggle.min.js',
         'Alt3/Swagger./lib/jquery.ba-bbq.min.js',
-        'Alt3/Swagger./lib/handlebars-2.0.0.js',
-        'Alt3/Swagger./lib/underscore-min.js',
+        'Alt3/Swagger./lib/handlebars-4.0.5.js',
+        'Alt3/Swagger./lib/lodash.min.js',
         'Alt3/Swagger./lib/backbone-min.js',
         'Alt3/Swagger./swagger-ui.js',
-        'Alt3/Swagger./lib/highlight.7.3.pack.js',
+        'Alt3/Swagger./lib/highlight.9.1.0.pack.js',
+        'Alt3/Swagger./lib/highlight.9.1.0.pack_extended.js',
+        'Alt3/Swagger./lib/jsoneditor.min.js',
         'Alt3/Swagger./lib/marked.js',
         'Alt3/Swagger./lib/swagger-oauth.js'
     ], ['fullBase' => true]);
@@ -76,6 +79,10 @@ if (!isset($uiConfig['validator'])) {
             } else {
                 url = "<?= $url ?>";
             }
+
+			hljs.configure({
+				highlightSizeThreshold: 5000
+			});
 
             // Pre load translate...
             if(window.SwaggerTranslator) {
@@ -102,38 +109,15 @@ if (!isset($uiConfig['validator'])) {
                     if(window.SwaggerTranslator) {
                         window.SwaggerTranslator.translate();
                     }
-
-                    $('pre code').each(function(i, e) {
-                        hljs.highlightBlock(e)
-                    });
-
-                    addApiKeyAuthorization();
                 },
                 onFailure: function(data) {
                     log("Unable to Load SwaggerUI");
                 },
                 docExpansion: "none",
-                apisSorter: "alpha",
+                jsonEditor: false,
                 defaultModelRendering: 'schema',
                 showRequestHeaders: false
             });
-
-            function addApiKeyAuthorization(){
-                var key = encodeURIComponent($('#input_apiKey')[0].value);
-                if(key && key.trim() != "") {
-                    var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
-                    window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-                    log("added key " + key);
-                }
-            }
-
-            $('#input_apiKey').change(addApiKeyAuthorization);
-
-            // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
-            /*
-             var apiKey = "myApiKeyXXXX123456789";
-             $('#input_apiKey').val(apiKey);
-             */
 
             window.swaggerUi.load();
 

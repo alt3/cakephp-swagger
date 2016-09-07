@@ -84,6 +84,7 @@ class SwaggerShellTest extends TestCase
             $obj->properties->{$propertyName} = $obj->class->getProperty($propertyName);
             $obj->properties->{$propertyName}->setAccessible(true);
         }
+
         return $obj;
     }
 }

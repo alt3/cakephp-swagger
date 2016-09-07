@@ -70,6 +70,7 @@ class SwaggerTools
         if (!$fh->write($content)) {
             throw new InternalErrorException('Error writing Swagger json document to filesystem');
         }
+
         return true;
     }
 
@@ -94,6 +95,7 @@ class SwaggerTools
         foreach (array_keys(Configure::read('Swagger.library')) as $doc) {
             self::getSwaggerDocument($doc, $host);
         }
+
         return true;
     }
 }
