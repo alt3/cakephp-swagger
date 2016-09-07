@@ -28,6 +28,7 @@ class DocsController extends AppController
     {
         if (!$id) {
             $this->jsonResponse($this->getJsonDocumentList());
+
             return;
         }
 
@@ -70,6 +71,7 @@ class DocsController extends AppController
                 ], true)
             ];
         }
+
         return json_encode(static::$apiResponseBody, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES);
     }
 
