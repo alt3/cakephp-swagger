@@ -51,6 +51,7 @@ return [
         'ui' => [
             'title' => 'ALT3 Swagger',
             'validator' => true,
+            'api_selector' => true,
             'route' => '/swagger/',
             'schemes' => ['http', 'https']
         ],
@@ -88,6 +89,7 @@ Use the `ui` section to customize the following Swagger-UI options:
 
 - `title`: sets the Swagger-UI page title, defaults to `cakephp-swagger`
 - `validator`: show/hide the validator image, defaults to `true`
+- `api_selector`: show/hide the api selector form fields, defaults to `true`
 - `route`: expose the UI using a custom route, defaults to `/alt3/swagger/`
 - `schemes`: array used to specify third field
 [used to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
