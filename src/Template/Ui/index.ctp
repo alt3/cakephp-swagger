@@ -11,6 +11,10 @@ if (!isset($uiConfig['validator'])) {
     $uiConfig['validator'] = true;
 }
 
+if (!isset($uiConfig['api_selector'])) {
+    $uiConfig['api_selector'] = true;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -134,11 +138,13 @@ if (!isset($uiConfig['validator'])) {
 <div id='header'>
     <div class="swagger-ui-wrap">
         <a id="logo" href="http://swagger.io">swagger</a>
-        <form id='api_selector'>
-            <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-            <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-            <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
-        </form>
+        <?php if ($uiConfig['api_selector'] === true) : ?>
+            <form id='api_selector'>
+                <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
+                <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
+                <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
+            </form>
+        <?php endif; ?>
     </div>
 </div>
 
