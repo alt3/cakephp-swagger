@@ -47,7 +47,9 @@ class SwaggerTools
 
         // set object properties required by UI to generate the BASE URL
         $swagger->host = $host;
-        $swagger->basePath = '/' . Configure::read('App.base');
+        if (empty($swagger->basePath)) {
+            $swagger->basePath = '/' . Configure::read('App.base');
+        }
         $swagger->schemes = Configure::read('Swagger.ui.schemes');
 
         // write document to filesystem
