@@ -93,7 +93,9 @@ Use the `ui` section to customize the following Swagger-UI options:
 - `route`: expose the UI using a custom route, defaults to `/alt3/swagger/`
 - `schemes`: array used to specify third field
 [used to generate the BASE URL](https://github.com/alt3/cakephp-swagger/issues/6)
-(`host` and `basePath` are fetched realtime), defaults to `null`
+(`host` is fetched realtime, `basePath` is also fetched realtime if not
+[defined via annotations](https://github.com/alt3/cakephp-swagger/issues/29)),
+defaults to `null`
 
 > Please note that the UI will auto-load the first document found in the library.
 
