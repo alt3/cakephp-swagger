@@ -37,7 +37,7 @@ class SwaggerTools
         }
 
         // otherwise crawl-generate a fresh document
-        $swaggerOptions = null;
+        $swaggerOptions = [];
         if (Configure::read("Swagger.library.$id.exclude")) {
             $swaggerOptions = [
                 'exclude' => Configure::read("Swagger.library.$id.exclude")
