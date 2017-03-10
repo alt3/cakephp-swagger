@@ -91,7 +91,8 @@ class SwaggerToolsTest extends TestCase
                     'include' => APP . 'src',
                     'exclude' => APP . 'src' . DS . 'Controller' . DS . 'DummyExcludeController'
                 ]
-            ]
+            ],
+            'analyser' => new \Swagger\StaticAnalyser()
         ]));
 
         $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->lib, ['testdoc', 'www.test.app']);

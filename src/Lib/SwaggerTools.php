@@ -43,6 +43,9 @@ class SwaggerTools
                 'exclude' => Configure::read("Swagger.library.$id.exclude")
             ];
         }
+        if (Configure::read('Swagger.analyser')) {
+            $swaggerOptions['analyser'] = Configure::read('Swagger.analyser');
+        }
         $swagger = \Swagger\scan(Configure::read("Swagger.library.$id.include"), $swaggerOptions);
 
         // set object properties required by UI to generate the BASE URL
