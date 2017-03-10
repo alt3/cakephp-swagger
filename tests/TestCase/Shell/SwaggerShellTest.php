@@ -21,7 +21,7 @@ class SwaggerShellTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->io = $this->getMock('Cake\Console\ConsoleIo');
+        $this->io = $this->createMock('Cake\Console\ConsoleIo');
         $this->shell = new SwaggerShell($this->io);
     }
 
