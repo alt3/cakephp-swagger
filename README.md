@@ -216,7 +216,7 @@ working example into any of your php files.
             response="200",
             description="Successful operation",
             @SWG\Schema(
-                type="array",
+                type="object",
                 ref="#/definitions/Cocktail"
             )
         ),
