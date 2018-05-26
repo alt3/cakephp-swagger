@@ -3,12 +3,10 @@ namespace Alt3\Swagger\Test\TestCase\Lib;
 
 use Alt3\Swagger\Controller\AppController;
 use Alt3\Swagger\Lib\SwaggerTools;
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\TestSuite\TestCase;
 use StdClass;
-use Swagger\Annotations\Swagger;
 
 class SwaggerToolsTest extends TestCase
 {
@@ -104,7 +102,7 @@ class SwaggerToolsTest extends TestCase
      * Make sure an exception is thrown when swagger document cannot be
      * written to the filesystem.
      *
-     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @expectedException \Cake\Http\Exception\InternalErrorException
      * @expectedExceptionMessage Error writing Swagger json document to filesystem
      */
     public function testMethodWriteSwaggerDocumentToFileFail()
@@ -117,7 +115,7 @@ class SwaggerToolsTest extends TestCase
      * Make sure requesting a document that does not exist on the filesystem
      * throws an exception in non-development mode.
      *
-     * @expectedException \Cake\Network\Exception\NotFoundException
+     * @expectedException \Cake\Http\Exception\NotFoundException
      * @expectedExceptionMessageRegExp #Swagger json document was not found on filesystem: *#
      */
     public function testMethodGetSwaggerDocumentFromFileFail()
