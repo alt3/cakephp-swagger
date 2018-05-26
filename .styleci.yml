@@ -21,4 +21,4 @@ disabled:
 
 finder:
   not-path:
-    - "tests/test_app/src/Controller"
+    - "tests/App/Controller"
