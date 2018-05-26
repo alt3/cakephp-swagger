@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.6",
-        "cakephp/cakephp": "~3.1",
+        "cakephp/cakephp": "^3.5",
         "zircote/swagger-php": "^2.0"
     },
     "require-dev": {
@@ -18,7 +18,10 @@
     "autoload": {
         "psr-4": {
             "Alt3\\Swagger\\": "src"
-        }
+        },
+        "files": [
+            "aliases.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

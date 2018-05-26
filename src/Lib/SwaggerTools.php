@@ -3,8 +3,8 @@ namespace Alt3\Swagger\Lib;
 
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
-use Cake\Network\Exception\InternalErrorException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\InternalErrorException;
+use Cake\Http\Exception\NotFoundException;
 
 class SwaggerTools
 {
@@ -66,7 +66,7 @@ class SwaggerTools
      *
      * @param string $path Full path to the json document including filename
      * @param string $content Swagger content
-     * @throws Cake\Network\Exception\InternalErrorException
+     * @throws \Cake\Http\Exception\InternalErrorException
      * @return bool
      */
     protected static function writeSwaggerDocumentToFile($path, $content)
