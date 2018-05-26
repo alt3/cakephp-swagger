@@ -92,7 +92,7 @@ class DocsController extends AppController
         }
 
         foreach ($this->config['docs']['cors'] as $header => $value) {
-            $this->response->header($header, $value);
+            $this->response = $this->response->withHeader($header, $value);
         }
     }
 
@@ -105,8 +105,8 @@ class DocsController extends AppController
     protected function jsonResponse($json)
     {
         $this->set('json', $json);
-        $this->viewBuilder()->layout(false);
+        $this->viewBuilder()->setLayout(false);
         $this->addCorsHeaders();
-        $this->response->type('json');
+        $this->response = $this->response->withType('json');
     }
 }
