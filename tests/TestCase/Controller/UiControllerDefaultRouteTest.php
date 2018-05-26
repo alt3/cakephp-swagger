@@ -17,6 +17,7 @@ class UiControllerDefaultRouteTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+        $this->useHttpServer(true);
         $configTemplate = APP . 'config' . DS . 'swagger.php.ui.default_routes';
         $this->tempConfig = APP . 'config' . DS . 'swagger.php';
         copy($configTemplate, $this->tempConfig);
@@ -35,7 +36,9 @@ class UiControllerDefaultRouteTest extends IntegrationTestCase
      * Make sure the default UI route is connected and serves Petstore document.
      *
      * @return void
-     **/
+     *
+     * @throws \PHPUnit\Exception
+     */
     public function testDefaultRouteSuccess()
     {
         $this->get('/alt3/swagger');
@@ -48,7 +51,9 @@ class UiControllerDefaultRouteTest extends IntegrationTestCase
      * Make sure the custom UI route is not connected.
      *
      * @return void
-     **/
+     *
+     * @throws \PHPUnit\Exception
+     */
     public function testCustomRouteFail()
     {
         $this->get('/alt3/custom-ui-route');

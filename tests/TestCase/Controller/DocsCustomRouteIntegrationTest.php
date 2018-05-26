@@ -18,6 +18,7 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+        $this->useHttpServer(true);
         $configTemplate = APP . 'config' . DS . 'swagger.php.docs.custom_route';
         $this->tempConfig = APP . 'config' . DS . 'swagger.php';
         copy($configTemplate, $this->tempConfig);
@@ -42,7 +43,9 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
      * crawl-generated json with swagger body and CORS headers.
      *
      * @return void
-     **/
+     *
+     * @throws \PHPUnit\Exception
+     */
     public function testCustomRouteSuccess()
     {
         $this->get('/custom-docs-route/testdoc');
@@ -55,6 +58,7 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
 
     /**
      * Make sure the default document route no longer functions.
+     * @throws \PHPUnit\Exception
      */
     public function testDefaultRouteFail()
     {

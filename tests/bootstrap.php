@@ -114,6 +114,3 @@ Log::setConfig([
 
 // No need for routes boolean as they will be included by App/config/routes.php
 Plugin::load('Alt3/Swagger', ['path' => ROOT]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
