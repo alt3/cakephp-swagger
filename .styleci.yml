@@ -2,8 +2,6 @@ preset: recommended
 
 risky: false
 
-linting: true
-
 enabled:
   - unalign_double_arrow
   - concat_with_spaces
