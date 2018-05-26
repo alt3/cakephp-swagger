@@ -31,8 +31,8 @@
             response="200",
             description="Successful operation",
             @SWG\Schema(
-            type="array",
-                ref="#/definitions/Cocktail"
+                type="array",
+                items=@SWG\Schema(ref="#/definitions/Cocktail")
             )
         ),
         @SWG\Response(
