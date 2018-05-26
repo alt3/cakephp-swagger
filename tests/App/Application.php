@@ -14,6 +14,7 @@ class Application extends BaseApplication
             ->add(AssetMiddleware::class)
             // Add routing middleware.
             ->add(new RoutingMiddleware($this));
+
         return $middlewareQueue;
     }
 }
