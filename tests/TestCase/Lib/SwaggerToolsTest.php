@@ -69,7 +69,7 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src', // all files in dir
+                    'include' => APP, // all files in dir
                 ]
             ]
         ]));
@@ -86,8 +86,8 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src',
-                    'exclude' => APP . 'src' . DS . 'Controller' . DS . 'DummyExcludeController'
+                    'include' => APP,
+                    'exclude' => APP . DS . 'Controller' . DS . 'DummyExcludeController'
                 ]
             ],
             'analyser' => new \Swagger\StaticAnalyser()
@@ -149,7 +149,7 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src', // all files in dir
+                    'include' => APP, // all files in dir
                 ]
             ]
         ]));
@@ -165,7 +165,7 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src', // crawl all files in this directory
+                    'include' => APP, // crawl all files in this directory
                 ]
             ]
         ]));
@@ -214,7 +214,7 @@ class SwaggerToolsTest extends TestCase
         $reflection = self::getReflection($this->lib);
         Configure::write('Swagger.library', [
             'testdoc' => [
-                'include' => APP . 'src', // crawl all files in this directory
+                'include' => APP, // crawl all files in this directory
             ]
         ]);
         $result = $reflection->methods->makeDocs->invokeArgs($this->lib, ['www.test.app']);

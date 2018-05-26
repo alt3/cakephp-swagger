@@ -17,7 +17,7 @@ return [
         ],
         'library' => [
             'testdoc' => [
-                'include' => APP . DS . 'src'
+                'include' => APP
             ]
         ]
     ]

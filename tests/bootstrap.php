@@ -17,22 +17,22 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
 
-require_once 'vendor/autoload.php';
-
 // Path constants to a few helpful things.
 define('ROOT', dirname(__DIR__) . DS);
 define('CAKE_CORE_INCLUDE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 define('CORE_PATH', ROOT . 'vendor' . DS . 'cakephp' . DS . 'cakephp' . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 define('TESTS', ROOT . 'tests');
-define('APP', ROOT . 'tests' . DS . 'test_app' . DS);
-define('APP_DIR', 'test_app');
+define('APP', ROOT . 'tests' . DS . 'App' . DS);
+define('APP_DIR', 'App');
 define('WEBROOT_DIR', 'webroot');
 define('WWW_ROOT', APP . 'webroot' . DS);
 define('TMP', sys_get_temp_dir() . DS);
 define('CONFIG', APP . 'config' . DS);
 define('CACHE', TMP);
 define('LOGS', TMP);
+
+require_once ROOT . 'vendor/autoload.php';
 
 $loader = new \Cake\Core\ClassLoader();
 $loader->register();
@@ -47,7 +47,7 @@ mb_internal_encoding('UTF-8');
 
 Configure::write('debug', true);
 Configure::write('App', [
-    'namespace' => 'App',
+    'namespace' => 'Alt3\Swagger\Test\App',
     'encoding' => 'UTF-8',
     'base' => false,
     'baseUrl' => false,
@@ -112,7 +112,7 @@ Log::setConfig([
     ]
 ]);
 
-// No need for routes boolean as they will be included by test_app/routes.php
+// No need for routes boolean as they will be included by App/config/routes.php
 Plugin::load('Alt3/Swagger', ['path' => ROOT]);
 
 DispatcherFactory::add('Routing');
