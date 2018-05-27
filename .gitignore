@@ -1,5 +1,5 @@
 /vendor/*
 /tmp/*
 /logs/*
-.idea
+.idea/*
 composer.lock
