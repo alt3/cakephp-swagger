@@ -14,7 +14,8 @@ class SwaggerShell extends Shell
     /**
      * Define available subcommands, arguments and options.
      *
-     * @return parser
+     * @return \Cake\Console\ConsoleOptionParser
+     * @throws \Aura\Intl\Exception
      */
     public function getOptionParser()
     {

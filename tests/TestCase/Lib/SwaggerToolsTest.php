@@ -3,12 +3,10 @@ namespace Alt3\Swagger\Test\TestCase\Lib;
 
 use Alt3\Swagger\Controller\AppController;
 use Alt3\Swagger\Lib\SwaggerTools;
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\TestSuite\TestCase;
 use StdClass;
-use Swagger\Annotations\Swagger;
 
 class SwaggerToolsTest extends TestCase
 {
@@ -71,7 +69,7 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src', // all files in dir
+                    'include' => APP, // all files in dir
                 ]
             ]
         ]));
@@ -88,8 +86,8 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src',
-                    'exclude' => APP . 'src' . DS . 'Controller' . DS . 'DummyExcludeController'
+                    'include' => APP,
+                    'exclude' => APP . DS . 'Controller' . DS . 'DummyExcludeController'
                 ]
             ],
             'analyser' => new \Swagger\StaticAnalyser()
@@ -104,7 +102,7 @@ class SwaggerToolsTest extends TestCase
      * Make sure an exception is thrown when swagger document cannot be
      * written to the filesystem.
      *
-     * @expectedException \Cake\Network\Exception\InternalErrorException
+     * @expectedException \Cake\Http\Exception\InternalErrorException
      * @expectedExceptionMessage Error writing Swagger json document to filesystem
      */
     public function testMethodWriteSwaggerDocumentToFileFail()
@@ -117,7 +115,7 @@ class SwaggerToolsTest extends TestCase
      * Make sure requesting a document that does not exist on the filesystem
      * throws an exception in non-development mode.
      *
-     * @expectedException \Cake\Network\Exception\NotFoundException
+     * @expectedException \Cake\Http\Exception\NotFoundException
      * @expectedExceptionMessageRegExp #Swagger json document was not found on filesystem: *#
      */
     public function testMethodGetSwaggerDocumentFromFileFail()
@@ -151,7 +149,7 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src', // all files in dir
+                    'include' => APP, // all files in dir
                 ]
             ]
         ]));
@@ -167,7 +165,7 @@ class SwaggerToolsTest extends TestCase
             ],
             'library' => [
                 'testdoc' => [
-                    'include' => APP . 'src', // crawl all files in this directory
+                    'include' => APP, // crawl all files in this directory
                 ]
             ]
         ]));
@@ -216,7 +214,7 @@ class SwaggerToolsTest extends TestCase
         $reflection = self::getReflection($this->lib);
         Configure::write('Swagger.library', [
             'testdoc' => [
-                'include' => APP . 'src', // crawl all files in this directory
+                'include' => APP, // crawl all files in this directory
             ]
         ]);
         $result = $reflection->methods->makeDocs->invokeArgs($this->lib, ['www.test.app']);
