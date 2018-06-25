@@ -67,7 +67,7 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
 Browsing to `http://your.app/alt3/swagger` should now produce the
 [Swagger-UI](http://swagger.io/swagger-ui/) interface:
 
-    ![Default UI index](/docs/images/ui-index-default.png)
+![Default UI index](/docs/images/ui-index-default.png)
 
 ## Configuration
 
