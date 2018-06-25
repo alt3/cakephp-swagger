@@ -9,7 +9,7 @@ class Application extends BaseApplication
 {
     /**
      * Loads the assets and routing middleware which are necessary to test the plugin.
-     * 
+     *
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to set in your App Class
      * @return \Cake\Http\MiddlewareQueue
      */
