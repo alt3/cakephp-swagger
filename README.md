@@ -24,13 +24,13 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
 2. To enable the plugin either run the following command:
 
     ```bash
-    bin/cake plugin load Alt3/Swagger --routes
+    bin/cake plugin load Alt3/Swagger --routes --bootstrap
     ```
 
     or manually add the following line to your `config/bootstrap.php` file:
 
     ```bash
-    Plugin::load('Alt3/Swagger', ['routes' => true]);
+    Plugin::load('Alt3/Swagger', ['routes' => true, 'bootstrap' => true]);
     ```
 
 
@@ -55,7 +55,7 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
          */
         public function bootstrap()
         {
-            $this->addPlugin(Swagger::class, ['routes' => true]);
+            $this->addPlugin(Swagger::class, ['routes' => true, 'bootstrap' => true]);
             parent::bootstrap();
         }
     }
