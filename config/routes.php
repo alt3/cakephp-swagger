@@ -1,4 +1,5 @@
 <?php
+
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
@@ -18,43 +19,45 @@ if (file_exists($configPath)) {
  * - docs, defaults to /alt3/swagger/docs
  * - per library document, defaults to /alt3/swagger/docs/:id
  */
-Router::plugin('Alt3/Swagger', function ($routes) {
+Router::plugin('Alt3/Swagger', function (\Cake\Routing\RouteBuilder $routes) {
 
     // UI route
     if (Configure::read('Swagger.ui.route')) {
-        Router::connect(
+        $routes->get(
             Configure::read('Swagger.ui.route'),
-            ['plugin' => 'Alt3/Swagger', 'controller' => 'Ui', 'action' => 'index']
+            ['controller' => 'Ui', 'action' => 'index']
         );
     } else {
-        Router::connect(
+        $routes->get(
             '/alt3/swagger/',
-            ['plugin' => 'Alt3/Swagger', 'controller' => 'Ui', 'action' => 'index']
+            ['controller' => 'Ui', 'action' => 'index']
         );
     }
 
     // Documents route
     if (Configure::read('Swagger.docs.route')) {
-        Router::connect(
+        $routes->get(
             Configure::read('Swagger.docs.route'),
-            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
+            ['controller' => 'Docs', 'action' => 'index']
         );
 
-        Router::connect(
+        $routes->get(
             Configure::read('Swagger.docs.route') . ':id',
-            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index'],
-            ['id' => '\w+', 'pass' => ['id']]
-        );
+            ['controller' => 'Docs', 'action' => 'index']
+        )
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\w+']);
     } else {
-        Router::connect(
+        $routes->get(
             '/alt3/swagger/docs',
-            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
+            ['controller' => 'Docs', 'action' => 'index']
         );
 
-        Router::connect(
+        $routes->get(
             '/alt3/swagger/docs/:id',
-            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index'],
-            ['id' => '\w+', 'pass' => ['id']]
-        );
+            ['controller' => 'Docs', 'action' => 'index']
+        )
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\w+']);
     }
 });
