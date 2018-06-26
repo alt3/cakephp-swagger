@@ -41,7 +41,6 @@ class SwaggerShell extends Shell
     public function makedocs($host)
     {
         // make same configuration as used by the API availble inside the lib
-        require ROOT . DS . 'config/routes.php';
         if (Configure::read('Swagger')) {
             $this->config = Hash::merge(AppController::$defaultConfig, Configure::read('Swagger'));
         }
