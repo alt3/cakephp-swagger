@@ -1,6 +1,7 @@
 <?php
 namespace Alt3\Swagger\Test\App;
 
+use Alt3\Swagger\Plugin;
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
@@ -22,5 +23,11 @@ class Application extends BaseApplication
             ->add(new RoutingMiddleware($this));
 
         return $middlewareQueue;
+    }
+
+    public function bootstrap()
+    {
+        $this->addPlugin(Plugin::class, ['routes' => true]);
+        parent::bootstrap();
     }
 }

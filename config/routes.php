@@ -1,5 +1,4 @@
 <?php
-
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
@@ -23,41 +22,41 @@ Router::plugin('Alt3/Swagger', function (\Cake\Routing\RouteBuilder $routes) {
 
     // UI route
     if (Configure::read('Swagger.ui.route')) {
-        $routes->get(
+        $routes->connect(
             Configure::read('Swagger.ui.route'),
-            ['controller' => 'Ui', 'action' => 'index']
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Ui', 'action' => 'index']
         );
     } else {
-        $routes->get(
+        $routes->connect(
             '/alt3/swagger/',
-            ['controller' => 'Ui', 'action' => 'index']
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Ui', 'action' => 'index']
         );
     }
 
     // Documents route
     if (Configure::read('Swagger.docs.route')) {
-        $routes->get(
+        $routes->connect(
             Configure::read('Swagger.docs.route'),
-            ['controller' => 'Docs', 'action' => 'index']
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
         );
 
-        $routes->get(
+        $routes->connect(
             Configure::read('Swagger.docs.route') . ':id',
-            ['controller' => 'Docs', 'action' => 'index']
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
         )
-            ->setPass(['id'])
-            ->setPatterns(['id' => '\w+']);
+            ->setPatterns(['id' => '\w+'])
+            ->setPass(['id']);
     } else {
-        $routes->get(
+        $routes->connect(
             '/alt3/swagger/docs',
-            ['controller' => 'Docs', 'action' => 'index']
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
         );
 
-        $routes->get(
+        $routes->connect(
             '/alt3/swagger/docs/:id',
-            ['controller' => 'Docs', 'action' => 'index']
+            ['plugin' => 'Alt3/Swagger', 'controller' => 'Docs', 'action' => 'index']
         )
-            ->setPass(['id'])
-            ->setPatterns(['id' => '\w+']);
+            ->setPatterns(['id' => '\w+'])
+            ->setPass(['id']);
     }
 });
