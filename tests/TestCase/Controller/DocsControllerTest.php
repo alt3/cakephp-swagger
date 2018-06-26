@@ -2,11 +2,7 @@
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Alt3\Swagger\Controller\DocsController;
-use Alt3\Swagger\Plugin;
 use Alt3\Swagger\Test\App\Application;
-use Cake\Cache\Cache;
-use Cake\Filesystem\File;
-use Cake\Http\Server;
 use Cake\TestSuite\TestCase;
 use StdClass;
 
@@ -42,10 +38,13 @@ class DocsControllerTest extends TestCase
      */
     public function setUp()
     {
-        $plugin = new Plugin(['routes' => true]);
-        $plugin->routes(null);
         parent::setUp();
         $this->controller = new DocsController();
+
+        $app = new Application(CONFIG);
+        $app->bootstrap();
+        $app->routes(null);
+        $app->pluginRoutes(null);
     }
 
     /**
