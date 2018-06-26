@@ -3,22 +3,15 @@ use Cake\Core\Configure;
 use Cake\Routing\Router;
 
 /*
- * Load app-specific configuration file
- */
-$config = 'swagger';
-$configPath = CONFIG . $config . '.php';
-if (file_exists($configPath)) {
-    Configure::load($config, 'default');
-}
-
-/*
  * Connect routes using configuration file, otherwise use defaults:
  *
  * - UI, defaults to /alt3/swagger
  * - docs, defaults to /alt3/swagger/docs
  * - per library document, defaults to /alt3/swagger/docs/:id
  */
-Router::plugin('Alt3/Swagger', function (\Cake\Routing\RouteBuilder $routes) {
+Router::plugin('Alt3/Swagger', [
+    'path' => '/'
+], function (\Cake\Routing\RouteBuilder $routes) {
 
     // UI route
     if (Configure::read('Swagger.ui.route')) {
