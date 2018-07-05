@@ -53,6 +53,8 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
     }
     ```
 
+> Please make sure that AssetMiddleware is loaded inside `Application.php` or all swagger page assets will 404.
+
 ## Installation check
 
 Browsing to `http://your.app/alt3/swagger` should now produce the
