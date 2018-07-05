@@ -13,7 +13,7 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
 * CakePHP 3.0+
 * Some [swagger-php](https://github.com/zircote/swagger-php) annotation knowledge
 
-## Installation
+## Installation (pre CakePHP 3.6)
 
 1. Install the plugin using composer:
 
@@ -24,18 +24,50 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
 2. To enable the plugin either run the following command:
 
     ```bash
-    bin/cake plugin load Alt3/Swagger --routes
+    bin/cake plugin load Alt3/Swagger --routes --bootstrap
     ```
 
     or manually add the following line to your `config/bootstrap.php` file:
 
     ```bash
-    Plugin::load('Alt3/Swagger', ['routes' => true]);
+    Plugin::load('Alt3/Swagger', ['routes' => true, 'bootstrap' => true]);
     ```
-3. Browsing to `http://your.app/alt3/swagger` should now produce the
+
+
+## Installation (post CakePHP 3.6)
+
+1. Install the plugin using composer:
+
+    ```bash
+    composer require alt3/cakephp-swagger:dev-master
+    ```
+
+2. Enable the plugin in the Application::bootstrap() method (`src/Application`):
+
+
+    ```php
+    use Alt3\Swagger\Plugin as Swagger;
+    
+    class Application extends BaseApplication {
+        ...
+        /**
+         * {@inheritDoc}
+         */
+        public function bootstrap()
+        {
+            $this->addPlugin(Swagger::class, ['routes' => true, 'bootstrap' => true]);
+            parent::bootstrap();
+        }
+    }
+    ```
+
+
+## Installation check
+
+Browsing to `http://your.app/alt3/swagger` should now produce the
 [Swagger-UI](http://swagger.io/swagger-ui/) interface:
 
-    ![Default UI index](/docs/images/ui-index-default.png)
+![Default UI index](/docs/images/ui-index-default.png)
 
 ## Configuration
 
