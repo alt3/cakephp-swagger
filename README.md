@@ -47,8 +47,8 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
     ```php
         public function bootstrap()
         {
-            $this->addPlugin('Alt3/Swagger');
             parent::bootstrap();
+            $this->addPlugin('Alt3/Swagger');
         }
     }
     ```
