@@ -42,12 +42,9 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
     composer require alt3/cakephp-swagger:dev-master
     ```
 
-2. Enable the plugin in the `bootstrap()` method as found in `src/Application.php`:
-
+2. Enable the plugin in the `bootstrap()` method found in `src/Application.php`:
 
     ```php
-    class Application extends BaseApplication {
-        ...
         public function bootstrap()
         {
             $this->addPlugin('Alt3/Swagger');
