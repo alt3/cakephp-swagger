@@ -10,54 +10,49 @@ CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your pr
 
 ## Requirements
 
-* CakePHP 3.0+
+* CakePHP 3.5+
 * Some [swagger-php](https://github.com/zircote/swagger-php) annotation knowledge
 
-## Installation (pre CakePHP 3.6)
+## Installation
 
-1. Install the plugin using composer:
+Install the plugin using composer:
 
-    ```bash
-    composer require alt3/cakephp-swagger:dev-master
-    ```
+```bash
+composer require alt3/cakephp-swagger
+```
 
-2. To enable the plugin either run the following command:
+## Enabling for CakePHP < 3.6
 
-    ```bash
-    bin/cake plugin load Alt3/Swagger --routes --bootstrap
-    ```
+To enable the plugin either run the following command:
 
-    or manually add the following line to your `config/bootstrap.php` file:
+```bash
+bin/cake plugin load Alt3/Swagger --routes --bootstrap
+```
 
-    ```bash
-    Plugin::load('Alt3/Swagger', ['routes' => true, 'bootstrap' => true]);
-    ```
+or manually add the following line to your `config/bootstrap.php` file:
 
+```bash
+Plugin::load('Alt3/Swagger', ['routes' => true, 'bootstrap' => true]);
+```
 
-## Installation (post CakePHP 3.6)
+## Enabling for CakePHP >= 3.6
 
-1. Install the plugin using composer:
+Enable the plugin in the `bootstrap()` method found in `src/Application.php`:
 
-    ```bash
-    composer require alt3/cakephp-swagger:dev-master
-    ```
-
-2. Enable the plugin in the `bootstrap()` method found in `src/Application.php`:
-
-    ```php
-        public function bootstrap()
-        {
-            parent::bootstrap();
-            $this->addPlugin('Alt3/Swagger');
-        }
+```php
+    public function bootstrap()
+    {
+        parent::bootstrap();
+        $this->addPlugin('Alt3/Swagger');
     }
-    ```
+}
+```
 
 > Also make sure that AssetMiddleware is loaded inside `Application.php` or all Swagger page assets will 404.
 
 ## Installation check
 
-Browsing to `http://your.app/alt3/swagger` should now produce the
+After enabling the plugin, browsing to `http://your.app/alt3/swagger` should now produce the
 [Swagger-UI](http://swagger.io/swagger-ui/) interface:
 
 ![Default UI index](/docs/images/ui-index-default.png)
