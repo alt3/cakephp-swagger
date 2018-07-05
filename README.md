@@ -45,7 +45,6 @@ Enable the plugin in the `bootstrap()` method found in `src/Application.php`:
         parent::bootstrap();
         $this->addPlugin('Alt3/Swagger');
     }
-}
 ```
 
 > Also make sure that AssetMiddleware is loaded inside `Application.php` or all Swagger page assets will 404.
