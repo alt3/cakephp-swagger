@@ -6,6 +6,7 @@ use Alt3\Swagger\Lib\SwaggerTools;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\Console\ConsoleOptionParser;
 
 class SwaggerShell extends Shell
 {
