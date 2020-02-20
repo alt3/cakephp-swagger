@@ -17,7 +17,7 @@ class SwaggerShell extends Shell
      * @return \Cake\Console\ConsoleOptionParser
      * @throws \Aura\Intl\Exception
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $parser = parent::getOptionParser();
 
