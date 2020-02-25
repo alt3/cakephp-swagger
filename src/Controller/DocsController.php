@@ -105,7 +105,7 @@ class DocsController extends AppController
     protected function jsonResponse($json)
     {
         $this->set('json', $json);
-        $this->viewBuilder()->setLayout(false);
+        $this->viewBuilder()->disableAutoLayout();
         $this->addCorsHeaders();
         $this->response = $this->response->withType('json');
     }
