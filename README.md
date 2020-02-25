@@ -6,11 +6,11 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/alt3/cakephp-swagger.svg?style=flat-square)](https://packagist.org/packages/alt3/cakephp-swagger)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
-CakePHP 3.x plugin that adds auto-generated Swagger 2.0 documentation to your projects using swagger-php and swagger-ui.
+CakePHP 4.x plugin that adds auto-generated Swagger 2.0 documentation to your projects using swagger-php and swagger-ui.
 
 ## Requirements
 
-* CakePHP 3.5+
+* CakePHP 4.0+
 * Some [swagger-php](https://github.com/zircote/swagger-php) annotation knowledge
 
 ## Installation
@@ -21,22 +21,7 @@ Install the plugin using composer:
 composer require alt3/cakephp-swagger
 ```
 
-## Enabling for CakePHP < 3.6
-
-To enable the plugin either run the following command:
-
-```bash
-bin/cake plugin load Alt3/Swagger --routes --bootstrap
-```
-
-or manually add the following line to your `config/bootstrap.php` file:
-
-```bash
-Plugin::load('Alt3/Swagger', ['routes' => true, 'bootstrap' => true]);
-```
-
-## Enabling for CakePHP >= 3.6
-
+## Enabling 
 Enable the plugin in the `bootstrap()` method found in `src/Application.php`:
 
 ```php
@@ -281,6 +266,6 @@ Which should result in:
 
 Before submitting a PR make sure:
 
-- [PHPUnit](http://book.cakephp.org/3.0/en/development/testing.html#running-tests)
+- [PHPUnit](http://book.cakephp.org/4.0/en/development/testing.html#running-tests)
 and [CakePHP Code Sniffer](https://github.com/cakephp/cakephp-codesniffer) tests pass
 - [Coveralls Code Coverage ](https://coveralls.io/github/alt3/cakephp-swagger) remains at 100%

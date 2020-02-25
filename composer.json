@@ -1,6 +1,6 @@
 {
     "name": "alt3/cakephp-swagger",
-    "description": "Instant Swagger documentation for your CakePHP 3.x APIs",
+    "description": "Instant Swagger documentation for your CakePHP 4.x APIs",
     "type": "cakephp-plugin",
     "license": "MIT",
     "require": {
