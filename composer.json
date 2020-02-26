@@ -9,7 +9,8 @@
         "zircote/swagger-php": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.0",
+        "cakephp/cakephp-codesniffer": "^4.0"
     },
     "support": {
         "issues": "https://github.com/alt3/cakephp-swagger/issues",
