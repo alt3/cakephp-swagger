@@ -28,7 +28,7 @@ before_script:
   - composer self-update
   - composer install --prefer-dist --no-interaction
 
-  - sh -c "if [ '$PHPCS' = '1' ]; then composer require cakephp/cakephp-codesniffer:dev-master; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then composer require --dev cakephp/cakephp-codesniffer; fi"
 
   - phpenv rehash
   - set +H
