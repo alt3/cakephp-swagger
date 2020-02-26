@@ -5,6 +5,7 @@ use Alt3\Swagger\Plugin;
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Cake\Http\MiddlewareQueue;
 
 class Application extends BaseApplication
 {
@@ -14,7 +15,7 @@ class Application extends BaseApplication
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to set in your App Class
      * @return \Cake\Http\MiddlewareQueue
      */
-    public function middleware($middlewareQueue)
+    public function middleware($middlewareQueue): MiddlewareQueue
     {
         $middlewareQueue
             // Handle plugin/theme assets like CakePHP normally does.
@@ -25,7 +26,7 @@ class Application extends BaseApplication
         return $middlewareQueue;
     }
 
-    public function bootstrap()
+    public function bootstrap(): void
     {
         $this->addPlugin(Plugin::class, ['routes' => true, 'bootstrap' => true]);
         parent::bootstrap();

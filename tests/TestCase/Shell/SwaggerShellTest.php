@@ -18,7 +18,7 @@ class SwaggerShellTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->io = $this->createMock('Cake\Console\ConsoleIo');
@@ -30,7 +30,7 @@ class SwaggerShellTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->shell);
         parent::tearDown();

@@ -14,7 +14,7 @@ class UiControllerDefaultRouteTest extends IntegrationTestCase
     /**
      * setUp method.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->useHttpServer(true);
@@ -26,7 +26,7 @@ class UiControllerDefaultRouteTest extends IntegrationTestCase
     /**
      * tearDown method.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unlink($this->tempConfig);

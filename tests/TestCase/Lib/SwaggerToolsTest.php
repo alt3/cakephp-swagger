@@ -31,7 +31,7 @@ class SwaggerToolsTest extends TestCase
     /**
      * setUp method executed before every testMethod.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->lib = new SwaggerTools();
@@ -40,7 +40,7 @@ class SwaggerToolsTest extends TestCase
     /**
      * tearDown method executed after every testMethod.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDownAfterClass();
         $testDoc = CACHE . 'cakephp_swagger_testdoc.json';
