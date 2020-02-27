@@ -25,7 +25,7 @@ class SwaggerShell extends Shell
         $parser = parent::getOptionParser();
 
         $parser->addSubcommand('makedocs', [
-            'description' => __('Crawl-generate fresh swagger file system documents for all entries found in the library.'),
+            'description' => __('Crawl-generate fresh swagger file system documents for all entries found in the library.'), //phpcs:ignore
         ])
         ->addArgument('host', [
             'help' => __("Swagger host FQDN (without protocol) as to be inserted into the swagger doc property 'host'"),

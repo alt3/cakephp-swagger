@@ -38,7 +38,7 @@ class DocsController extends AppController
         }
 
         if (!array_key_exists($id, $this->config['library'])) {
-            throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'");
+            throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'"); // phpcs:ignore
         }
 
         $document = SwaggerTools::getSwaggerDocument($id, $this->request->host());
