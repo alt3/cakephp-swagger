@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Controller;
 
 use Alt3\Swagger\Lib\SwaggerTools;
@@ -6,13 +8,12 @@ use Cake\Routing\Router;
 
 class DocsController extends AppController
 {
-
     /**
      * @var array Default CakePHP API success response structure.
      */
     public static $apiResponseBody = [
         'success' => true,
-        'data' => []
+        'data' => [],
     ];
 
     /**
@@ -37,7 +38,7 @@ class DocsController extends AppController
         }
 
         if (!array_key_exists($id, $this->config['library'])) {
-            throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'");
+            throw new \InvalidArgumentException("Swagger configuration file does not contain a document definition for '$id'"); // phpcs:ignore
         }
 
         $document = SwaggerTools::getSwaggerDocument($id, $this->request->host());
@@ -67,8 +68,8 @@ class DocsController extends AppController
                     'plugin' => 'Alt3/Swagger',
                     'controller' => 'Docs',
                     'action' => 'index',
-                    $document
-                ], true)
+                    $document,
+                ], true),
             ];
         }
 
@@ -105,7 +106,7 @@ class DocsController extends AppController
     protected function jsonResponse($json)
     {
         $this->set('json', $json);
-        $this->viewBuilder()->setLayout(false);
+        $this->viewBuilder()->disableAutoLayout();
         $this->addCorsHeaders();
         $this->response = $this->response->withType('json');
     }

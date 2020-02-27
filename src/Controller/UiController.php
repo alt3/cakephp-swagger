@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Controller;
 
 use Cake\Routing\Router;
@@ -15,7 +17,7 @@ class UiController extends AppController
      */
     public function index()
     {
-        $this->viewBuilder()->setLayout(false);
+        $this->viewBuilder()->disableAutoLayout();
         $this->set('uiConfig', $this->config['ui']);
         $this->set('url', $this->getDefaultDocumentUrl());
     }
@@ -37,7 +39,7 @@ class UiController extends AppController
             'plugin' => 'Alt3/Swagger',
             'controller' => 'Docs',
             'action' => 'index',
-            $defaultDocument
+            $defaultDocument,
         ], true);
     }
 }

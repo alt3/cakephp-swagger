@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Controller;
 
 use Cake\Controller\Controller as BaseController;
@@ -7,7 +9,6 @@ use Cake\Utility\Hash;
 
 class AppController extends BaseController
 {
-
     /**
      * @var array that will hold merged configuration settings.
      */
@@ -18,11 +19,11 @@ class AppController extends BaseController
      */
     public static $defaultConfig = [
         'docs' => [
-            'crawl' => true
+            'crawl' => true,
         ],
         'ui' => [
-            'title' => 'cakephp-swagger'
-        ]
+            'title' => 'cakephp-swagger',
+        ],
     ];
 
     /**
@@ -30,7 +31,7 @@ class AppController extends BaseController
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

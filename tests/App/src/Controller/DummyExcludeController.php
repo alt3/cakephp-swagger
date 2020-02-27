@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+namespace Alt3\Swagger\Controller;
+
 /**
  * Dummy test_app controller only used for crawl-generating a swagger document.
  *
@@ -17,5 +21,4 @@
  */
 class DummyExcludeController
 {
-
 }

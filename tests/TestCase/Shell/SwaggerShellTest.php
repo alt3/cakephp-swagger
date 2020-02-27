@@ -1,13 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Shell;
 
 use Alt3\Swagger\Shell\SwaggerShell;
 use Cake\TestSuite\TestCase;
-use StdClass;
+use stdClass;
 
 class SwaggerShellTest extends TestCase
 {
-
     /**
      * @var \Alt3\Swagger\Shell\SwaggerShell SwaggerShell instance.
      */
@@ -18,7 +19,7 @@ class SwaggerShellTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->io = $this->createMock('Cake\Console\ConsoleIo');
@@ -30,7 +31,7 @@ class SwaggerShellTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->shell);
         parent::tearDown();

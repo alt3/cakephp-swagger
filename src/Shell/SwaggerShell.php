@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Shell;
 
 use Alt3\Swagger\Controller\AppController;
 use Alt3\Swagger\Lib\SwaggerTools;
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
@@ -17,16 +20,16 @@ class SwaggerShell extends Shell
      * @return \Cake\Console\ConsoleOptionParser
      * @throws \Aura\Intl\Exception
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $parser = parent::getOptionParser();
 
         $parser->addSubcommand('makedocs', [
-            'description' => __('Crawl-generate fresh swagger file system documents for all entries found in the library.')
+            'description' => __('Crawl-generate fresh swagger file system documents for all entries found in the library.'), //phpcs:ignore
         ])
         ->addArgument('host', [
             'help' => __("Swagger host FQDN (without protocol) as to be inserted into the swagger doc property 'host'"),
-            'required' => true
+            'required' => true,
         ]);
 
         return $parser;

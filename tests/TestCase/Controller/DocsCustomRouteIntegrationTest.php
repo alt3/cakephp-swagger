@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Cake\TestSuite\IntegrationTestCase;
 
 class DocsCustomRouteIntegrationTest extends IntegrationTestCase
 {
-
     /**
      * @var string holding full path to temporary swagger.php configuration file.
      */
@@ -15,7 +16,7 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
      * setUp method. Creates a temporary swagger.php configuration file
      * specific to this integration test.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->useHttpServer(true);
@@ -27,7 +28,7 @@ class DocsCustomRouteIntegrationTest extends IntegrationTestCase
     /**
      * tearDown method executed after every test method.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unlink($this->tempConfig);
