@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Alt3\Swagger\Controller\DocsController;
 use Alt3\Swagger\Test\App\Application;
-use Cake\TestSuite\TestCase;
 use Cake\Routing\Router;
+use Cake\TestSuite\TestCase;
 use StdClass;
 
 class DocsControllerTest extends TestCase
@@ -19,11 +21,11 @@ class DocsControllerTest extends TestCase
      */
     protected static $defaultConfig = [
         'docs' => [
-            'crawl' => true
+            'crawl' => true,
         ],
         'ui' => [
-            'title' => 'cakephp-swagger'
-        ]
+            'title' => 'cakephp-swagger',
+        ],
     ];
 
     /**
@@ -31,7 +33,7 @@ class DocsControllerTest extends TestCase
      */
     protected static $apiResponseBody = [
         'success' => true,
-        'data' => []
+        'data' => [],
     ];
 
     /**
@@ -85,7 +87,7 @@ class DocsControllerTest extends TestCase
 
         // no documents in library should return empty json success response
         $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'library' => []
+            'library' => [],
         ]));
         $result = $reflection->methods->getJsonDocumentList->invokeArgs($this->controller, []);
         $expected = json_encode(self::$apiResponseBody, JSON_PRETTY_PRINT);
@@ -95,8 +97,8 @@ class DocsControllerTest extends TestCase
         $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'library' => [
                 'testdoc1' => [],
-                'testdoc2' => []
-            ]
+                'testdoc2' => [],
+            ],
         ]));
 
         $expected = <<<'EOF'
@@ -146,7 +148,7 @@ EOF;
     {
         $reflection = self::getReflection($this->controller);
         $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'library' => []
+            'library' => [],
         ]));
         $reflection->methods->index->invokeArgs($this->controller, ['testdoc']);
     }
@@ -168,8 +170,8 @@ EOF;
         // cors headers section in configuration but no entries
         $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
             'docs' => [
-                'cors' => []
-            ]
+                'cors' => [],
+            ],
         ]));
         $result = $reflection->methods->addCorsHeaders->invokeArgs($this->controller, []);
         $this->assertFalse($result);

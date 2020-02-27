@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Alt3\Swagger\Controller\UiController;
@@ -9,7 +11,6 @@ use StdClass;
 
 class UiControllerTest extends TestCase
 {
-
     /**
      * @var \Alt3\Swagger\Controller\UiController
      */
@@ -20,11 +21,11 @@ class UiControllerTest extends TestCase
      */
     protected static $defaultConfig = [
         'docs' => [
-            'crawl' => true
+            'crawl' => true,
         ],
         'ui' => [
-            'title' => 'cakephp-swagger'
-        ]
+            'title' => 'cakephp-swagger',
+        ],
     ];
 
     /**
@@ -61,7 +62,7 @@ class UiControllerTest extends TestCase
 
         // test without library documents
         $reflection->properties->config->setValue($this->controller, array_merge(self::$defaultConfig, [
-            'library' => []
+            'library' => [],
         ]));
         $result = $reflection->methods->getDefaultDocumentUrl->invokeArgs($this->controller, []);
         $this->assertSame($result, 'http://petstore.swagger.io/v2/swagger.json');
@@ -69,8 +70,8 @@ class UiControllerTest extends TestCase
         // test with library document
         $reflection->properties->config->setValue($this->controller, [
             'library' => [
-                'testdoc' => []
-            ]
+                'testdoc' => [],
+            ],
         ]);
         $result = $reflection->methods->getDefaultDocumentUrl->invokeArgs($this->controller, []);
         $this->assertSame($result, 'http://localhost/alt3/swagger/docs/testdoc');

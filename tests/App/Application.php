@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\App;
 
 use Alt3\Swagger\Plugin;
 use Cake\Http\BaseApplication;
+use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Cake\Http\MiddlewareQueue;
 
 class Application extends BaseApplication
 {

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Shell;
 
 use Alt3\Swagger\Shell\SwaggerShell;
@@ -7,7 +9,6 @@ use StdClass;
 
 class SwaggerShellTest extends TestCase
 {
-
     /**
      * @var \Alt3\Swagger\Shell\SwaggerShell SwaggerShell instance.
      */

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Lib;
 
 use Cake\Core\Configure;
@@ -8,7 +10,6 @@ use Cake\Http\Exception\NotFoundException;
 
 class SwaggerTools
 {
-
     /**
      * @var string Prepended to filesystem swagger json files
      */
@@ -40,7 +41,7 @@ class SwaggerTools
         $swaggerOptions = [];
         if (Configure::read("Swagger.library.$id.exclude")) {
             $swaggerOptions = [
-                'exclude' => Configure::read("Swagger.library.$id.exclude")
+                'exclude' => Configure::read("Swagger.library.$id.exclude"),
             ];
         }
         if (Configure::read('Swagger.analyser')) {

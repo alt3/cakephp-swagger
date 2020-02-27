@@ -1,4 +1,5 @@
 <?php
+
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 
@@ -10,7 +11,7 @@ use Cake\Routing\Router;
  * - per library document, defaults to /alt3/swagger/docs/:id
  */
 Router::plugin('Alt3/Swagger', [
-    'path' => '/'
+    'path' => '/',
 ], function (\Cake\Routing\RouteBuilder $routes) {
 
     // UI route

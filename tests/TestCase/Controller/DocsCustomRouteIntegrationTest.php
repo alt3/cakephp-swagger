@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Controller;
 
 use Cake\TestSuite\IntegrationTestCase;
 
 class DocsCustomRouteIntegrationTest extends IntegrationTestCase
 {
-
     /**
      * @var string holding full path to temporary swagger.php configuration file.
      */

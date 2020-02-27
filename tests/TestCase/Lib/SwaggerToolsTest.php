@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Test\TestCase\Lib;
 
 use Alt3\Swagger\Controller\AppController;
@@ -10,7 +12,6 @@ use StdClass;
 
 class SwaggerToolsTest extends TestCase
 {
-
     /**
      * @var \Alt3\Swagger\Lib\SwaggerTools Swaggertools instance.
      */
@@ -21,11 +22,11 @@ class SwaggerToolsTest extends TestCase
      */
     protected static $defaultConfig = [
         'docs' => [
-            'crawl' => true
+            'crawl' => true,
         ],
         'ui' => [
-            'title' => 'cakephp-swagger'
-        ]
+            'title' => 'cakephp-swagger',
+        ],
     ];
 
     /**
@@ -65,13 +66,13 @@ class SwaggerToolsTest extends TestCase
         $reflection = self::getReflection($this->lib);
         Configure::write('Swagger', array_merge(self::$defaultConfig, [
             'docs' => [
-                'crawl' => true
+                'crawl' => true,
             ],
             'library' => [
                 'testdoc' => [
                     'include' => APP, // all files in dir
-                ]
-            ]
+                ],
+            ],
         ]));
 
         // make sure all files are being crawled
@@ -82,15 +83,15 @@ class SwaggerToolsTest extends TestCase
         // make sure exclusions are actually being excluded from crawling.
         Configure::write('Swagger', array_merge(self::$defaultConfig, [
             'docs' => [
-                'crawl' => true
+                'crawl' => true,
             ],
             'library' => [
                 'testdoc' => [
                     'include' => APP,
-                    'exclude' => APP . DS . 'Controller' . DS . 'DummyExcludeController'
-                ]
+                    'exclude' => APP . DS . 'Controller' . DS . 'DummyExcludeController',
+                ],
             ],
-            'analyser' => new \Swagger\StaticAnalyser()
+            'analyser' => new \Swagger\StaticAnalyser(),
         ]));
 
         $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->lib, ['testdoc', 'www.test.app']);
@@ -123,11 +124,11 @@ class SwaggerToolsTest extends TestCase
         $reflection = self::getReflection($this->lib);
         Configure::write('Swagger', array_merge(self::$defaultConfig, [
             'docs' => [
-                'crawl' => false // force loading doc from filesystem
+                'crawl' => false, // force loading doc from filesystem
             ],
             'library' => [
-                'nonexisting' => []
-            ]
+                'nonexisting' => [],
+            ],
         ]));
         $reflection->methods->getSwaggerDocument->invokeArgs($this->lib, ['nonexisting', 'www.test.app']);
     }
@@ -145,13 +146,13 @@ class SwaggerToolsTest extends TestCase
         $reflection = self::getReflection($this->lib);
         Configure::write('Swagger', array_merge(self::$defaultConfig, [
             'docs' => [
-                'crawl' => true
+                'crawl' => true,
             ],
             'library' => [
                 'testdoc' => [
                     'include' => APP, // all files in dir
-                ]
-            ]
+                ],
+            ],
         ]));
 
         $result = $reflection->methods->getSwaggerDocument->invokeArgs($this->lib, ['testdoc', 'www.test.app']);
@@ -161,13 +162,13 @@ class SwaggerToolsTest extends TestCase
         // generated file should load from from filesystem when disabling crawl
         Configure::write('Swagger', array_merge(self::$defaultConfig, [
             'docs' => [
-                'crawl' => false
+                'crawl' => false,
             ],
             'library' => [
                 'testdoc' => [
                     'include' => APP, // crawl all files in this directory
-                ]
-            ]
+                ],
+            ],
         ]));
 
         $reflection->methods->getSwaggerDocument->invokeArgs($this->lib, ['testdoc', 'www.test.app']);
@@ -215,7 +216,7 @@ class SwaggerToolsTest extends TestCase
         Configure::write('Swagger.library', [
             'testdoc' => [
                 'include' => APP, // crawl all files in this directory
-            ]
+            ],
         ]);
         $result = $reflection->methods->makeDocs->invokeArgs($this->lib, ['www.test.app']);
         $this->assertTrue($result);

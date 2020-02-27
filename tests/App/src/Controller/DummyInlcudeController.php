@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Dummy test_app controller only used for crawl-generating a swagger document.
@@ -63,5 +64,4 @@
  */
 class DummyIncludeController
 {
-
 }

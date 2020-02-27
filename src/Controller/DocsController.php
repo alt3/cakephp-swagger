@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alt3\Swagger\Controller;
 
 use Alt3\Swagger\Lib\SwaggerTools;
@@ -6,13 +8,12 @@ use Cake\Routing\Router;
 
 class DocsController extends AppController
 {
-
     /**
      * @var array Default CakePHP API success response structure.
      */
     public static $apiResponseBody = [
         'success' => true,
-        'data' => []
+        'data' => [],
     ];
 
     /**
@@ -67,8 +68,8 @@ class DocsController extends AppController
                     'plugin' => 'Alt3/Swagger',
                     'controller' => 'Docs',
                     'action' => 'index',
-                    $document
-                ], true)
+                    $document,
+                ], true),
             ];
         }
 
