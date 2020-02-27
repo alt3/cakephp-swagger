@@ -8,7 +8,7 @@ use Alt3\Swagger\Lib\SwaggerTools;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\TestSuite\TestCase;
-use StdClass;
+use stdClass;
 
 class SwaggerToolsTest extends TestCase
 {

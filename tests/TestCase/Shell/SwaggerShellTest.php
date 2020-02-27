@@ -5,7 +5,7 @@ namespace Alt3\Swagger\Test\TestCase\Shell;
 
 use Alt3\Swagger\Shell\SwaggerShell;
 use Cake\TestSuite\TestCase;
-use StdClass;
+use stdClass;
 
 class SwaggerShellTest extends TestCase
 {
