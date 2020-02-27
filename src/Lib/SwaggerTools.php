@@ -66,14 +66,14 @@ class SwaggerTools
      * Write swagger document to filesystem.
      *
      * @param string $path Full path to the json document including filename
-     * @param string $content Swagger content
+     * @param object $content Swagger content
      * @throws \Cake\Http\Exception\InternalErrorException
      * @return bool
      */
     protected static function writeSwaggerDocumentToFile($path, $content)
     {
         $fh = new File($path, true);
-        if (!$fh->write($content)) {
+        if (!$fh->write(serialize($content))) {
             throw new InternalErrorException('Error writing Swagger json document to filesystem');
         }
 
