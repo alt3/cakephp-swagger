@@ -72,8 +72,13 @@ class SwaggerTools
      */
     protected static function writeSwaggerDocumentToFile($path, $content)
     {
-        $fh = new File($path, true);
-        if (!$fh->write(serialize($content))) {
+        // we need to silence the warning so we can satisfy our Test by throwing without a warning interfering
+        $fh = @fopen($path, 'w'); // phpcs:ignore
+        if (!$fh) {
+            throw new InternalErrorException('Error writing Swagger json document to filesystem');
+        }
+
+        if (!fwrite($fh, $content->__toString())) {
             throw new InternalErrorException('Error writing Swagger json document to filesystem');
         }
 
