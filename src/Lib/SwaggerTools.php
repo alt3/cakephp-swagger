@@ -74,11 +74,7 @@ class SwaggerTools
     {
         // we need to silence the warning so we can satisfy our Test by throwing without a warning interfering
         $fh = @fopen($path, 'w'); // phpcs:ignore
-        if (!$fh) {
-            throw new InternalErrorException('Error writing Swagger json document to filesystem');
-        }
-
-        if (!fwrite($fh, $content->__toString())) {
+        if (!$fh || !fwrite($fh, $content->__toString())) {
             throw new InternalErrorException('Error writing Swagger json document to filesystem');
         }
 
